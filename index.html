@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baltic OSINT Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="dashboard-container">
+<!-- Uppe till vänster: MarineTraffic -->
+<section id="map-section" class="panel">
+<h2>Östersjön: MarineTraffic Live</h2>
+<div id="map-container">
+<iframe name="marinetraffic" id="marinetraffic" width="100%" height="100%" scrolling="no" frameborder="0" src="https://www.marinetraffic.com/en/ais/embed/mapv2/?zoom=5&lat=57.5&lon=19.5&maptype=4&shownames=false&mmsi=0&fleet=0&shiptype=0"></iframe>
+</div>
+</section>
+
+<!-- Höger sida: OSINT (SVT, X, etc.) - Notiser aktiverade -->
+<section id="osint-section" class="panel">
+<h2>Live OSINT & Nyheter</h2>
+<div id="osint-feed" class="feed-container"></div>
+</section>
+
+<!-- Nere till vänster: Myndigheter - Inga notiser -->
+<section id="gov-section" class="panel">
+<h2>Försvarsmakten & Polisen</h2>
+<div id="gov-feed" class="feed-container"></div>
+</section>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
