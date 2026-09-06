@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="sv">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,44 +9,74 @@
     <link rel="stylesheet" href="style.css">
 
     <link rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 
 <body>
 
-<div class="dashboard-container">
+    <div class="dashboard-container">
 
-    <section id="map-section" class="panel">
-        <h2>Östersjön: MarineTraffic Live</h2>
+        <!-- Övre vänster -->
 
-        <div id="map-container">
+        <section id="map-section" class="panel">
 
-            <iframe
-                id="marinetraffic"
-                width="100%"
-                height="100%"
-                frameborder="0"
-                scrolling="no"
-                src="https://www.marinetraffic.com/en/ais/embed/mapv2/?zoom=5&lat=57.5&lon=19.5&maptype=4&shownames=false&mmsi=0&fleet=0&shiptype=0">
-            </iframe>
+            <h2>Östersjön - Lägeskarta</h2>
 
-        </div>
-    </section>
+            <div id="overview-map"></div>
 
-    <section id="cables-section" class="panel">
-        <h2>Högspänningskablar i Östersjön</h2>
-        <div id="cable-map"></div>
-    </section>
+        </section>
 
-    <section id="osint-section" class="panel">
-        <h2>Säkerhet & OSINT</h2>
-        <div id="osint-feed" class="feed-container"></div>
-    </section>
+        <!-- Nedre vänster -->
 
-</div>
+        <section id="cables-section" class="panel">
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="script.js"></script>
+            <h2>Högspänningskablar i Östersjön</h2>
+
+            <div id="cable-map"></div>
+
+        </section>
+
+        <!-- Höger -->
+
+        <section id="osint-section" class="panel">
+
+            <h2>OSINT & Säkerhetsflöde</h2>
+
+            <div class="tabs">
+
+                <button class="tab-button active"
+                    onclick="showTab('today')">
+                    Idag
+                </button>
+
+                <button class="tab-button"
+                    onclick="showTab('yesterday')">
+                    Igår
+                </button>
+
+                <button class="tab-button"
+                    onclick="showTab('older')">
+                    Äldre
+                </button>
+
+            </div>
+
+            <div id="today-feed"
+                class="feed-container"></div>
+
+            <div id="yesterday-feed"
+                class="feed-container hidden"></div>
+
+            <div id="older-feed"
+                class="feed-container hidden"></div>
+
+        </section>
+
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
 
 </body>
+
 </html>
