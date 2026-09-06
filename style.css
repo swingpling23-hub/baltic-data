@@ -14,8 +14,7 @@ body {
 
 .dashboard-container {
     display: grid;
-    grid-template-columns: 35% 65%;
-    grid-template-rows: 50% 50%;
+    grid-template-columns: 50% 50%;
     height: 100vh;
     gap: 10px;
     padding: 10px;
@@ -28,6 +27,7 @@ body {
     display: flex;
     flex-direction: column;
     padding: 15px;
+    height: 100%;
 }
 
 h2 {
@@ -38,11 +38,15 @@ h2 {
     padding-bottom: 5px;
 }
 
-#map-section { grid-column: 1; grid-row: 1; }
-#cables-section { grid-column: 1; grid-row: 2; }
-#osint-section { grid-column: 2; grid-row: 1 / span 2; }
+#map-section {
+    grid-column: 1;
+}
 
-#map-container, #cable-map {
+#osint-section {
+    grid-column: 2;
+}
+
+#map-container {
     flex-grow: 1;
     border-radius: 4px;
     overflow: hidden;
