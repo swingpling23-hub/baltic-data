@@ -120,7 +120,7 @@ const feeds = [
 
 const securityKeywords = [
 
-    // Kabel- och energiinfrastruktur
+    // Kablar & energi
 
     'nordbalt',
     'estlink',
@@ -186,7 +186,7 @@ const securityKeywords = [
     'drones',
     'uav',
 
-    // Sprängämnen
+    // Explosivt
 
     'explosive',
     'explosives',
@@ -220,6 +220,27 @@ const securityKeywords = [
 
     'exercise',
     'military exercise',
+
+    'naval exercise',
+
+    'awacs',
+
+    'submarine',
+    'submarines',
+
+    'electronic warfare',
+
+    'hybrid warfare',
+
+    'air policing',
+
+    'maritime security',
+
+    'coast guard',
+
+    'special forces',
+
+    'baltops',
 
     'nato',
 
@@ -406,7 +427,6 @@ async function fetchFeeds() {
                     .toLowerCase();
 
                 const relevant =
-
                     securityKeywords.some(
                         keyword =>
                             content.includes(
@@ -415,11 +435,8 @@ async function fetchFeeds() {
                     );
 
                 if (
-
                     relevant &&
-
                     !seenArticles.has(item.link)
-
                 ) {
 
                     seenArticles.add(item.link);
@@ -452,8 +469,7 @@ async function fetchFeeds() {
 
         updateDiv.textContent =
             'Senaste RSS: ' +
-            new Date()
-            .toLocaleTimeString(
+            new Date().toLocaleTimeString(
                 'sv-SE'
             );
 
@@ -559,8 +575,7 @@ function renderArticle(
         'source';
 
     sourceDiv.textContent =
-        articleDate
-        .toLocaleTimeString(
+        articleDate.toLocaleTimeString(
             'sv-SE',
             {
                 hour: '2-digit',
