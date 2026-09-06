@@ -1,37 +1,37 @@
-// ======================================
+• // ======================================
 // OPENSEAMAP + ÖSTERSJÖKARTA
 // ======================================
 
 const overviewMap = L.map('overview-map').setView([58.5, 18.5], 5);
 
 L.tileLayer(
-    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-    {
-        maxZoom: 19
-    }
+'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+{
+maxZoom: 19
+}
 ).addTo(overviewMap);
 
 L.tileLayer(
-    'https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png',
-    {
-        opacity: 0.9
-    }
+'https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png',
+{
+opacity: 0.9
+}
 ).addTo(overviewMap);
 
 [
-    [57.65, 18.30, 'Gotland'],
-    [55.25, 14.90, 'Bornholm'],
-    [54.71, 20.50, 'Kaliningrad'],
-    [59.44, 24.75, 'Tallinn'],
-    [60.17, 24.94, 'Helsingfors'],
-    [55.71, 21.13, 'Klaipeda'],
-    [54.53, 18.55, 'Gdynia'],
-    [56.16, 15.59, 'Karlskrona']
+[57.65, 18.30, 'Gotland'],
+[55.25, 14.90, 'Bornholm'],
+[54.71, 20.50, 'Kaliningrad'],
+[59.44, 24.75, 'Tallinn'],
+[60.17, 24.94, 'Helsingfors'],
+[55.71, 21.13, 'Klaipeda'],
+[54.53, 18.55, 'Gdynia'],
+[56.16, 15.59, 'Karlskrona']
 ].forEach(place => {
 
-    L.marker([place[0], place[1]])
-        .addTo(overviewMap)
-        .bindPopup(place[2]);
+L.marker([place[0], place[1]])
+.addTo(overviewMap)
+.bindPopup(place[2]);
 
 });
 
@@ -40,13 +40,13 @@ L.tileLayer(
 // ======================================
 
 const cableMap = L.map('cable-map')
-    .setView([58.0, 18.0], 5);
+.setView([58.0, 18.0], 5);
 
 L.tileLayer(
-    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-    {
-        maxZoom: 19
-    }
+'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+{
+maxZoom: 19
+}
 ).addTo(cableMap);
 
 fetch('baltic-power-cables.geojson')
@@ -55,41 +55,38 @@ fetch('baltic-power-cables.geojson')
 
 .then(data => {
 
-    L.geoJSON(data, {
+L.geoJSON(data, {
 
-        style: {
-            color: '#00ffff',
-            weight: 4,
-            opacity: 0.9
-        },
+style: {
+color: '#00ffff',
+weight: 4,
+opacity: 0.9
+},
 
-        onEachFeature: function(feature, layer) {
+onEachFeature: function(feature, layer) {
 
-            layer.bindPopup(`
-                <b>${feature.properties.name}</b><br>
-                ${feature.properties.country}<br>
-                ${feature.properties.type}
-            `);
+layer.bindPopup(&lt;b&gt;${feature.properties.name}</b><br>
+${feature.properties.country}&lt;br&gt; ${feature.properties.type});
 
-        }
+}
 
-    }).addTo(cableMap);
+}).addTo(cableMap);
 
 })
 
 .catch(error => {
 
-    console.error(
-        'GeoJSON kunde inte läsas:',
-        error
-    );
+console.error(
+'GeoJSON kunde inte läsas:',
+error
+);
 
 });
 
 setTimeout(() => {
 
-    overviewMap.invalidateSize();
-    cableMap.invalidateSize();
+overviewMap.invalidateSize();
+cableMap.invalidateSize();
 
 }, 500);
 
@@ -102,15 +99,15 @@ const proxyUrl =
 
 const feeds = [
 
-    'https://feeds.bbci.co.uk/news/world/europe/rss.xml',
+'https://feeds.bbci.co.uk/news/world/europe/rss.xml',
 
-    'https://www.svt.se/nyheter/rss.xml',
+'https://www.svt.se/nyheter/rss.xml',
 
-    'https://feeds.expressen.se/nyheter/',
+'https://feeds.expressen.se/nyheter/',
 
-    'https://rss.dw.com/xml/rss-en-eu',
+'https://rss.dw.com/xml/rss-en-eu',
 
-    'https://www.navalnews.com/feed/'
+'https://www.navalnews.com/feed/'
 
 ];
 
@@ -120,205 +117,184 @@ const feeds = [
 
 const securityKeywords = [
 
-    // Kablar & energi
+// Kablar & energi
 
-    'nordbalt',
-    'estlink',
-    'estlink 1',
-    'estlink 2',
-    'swepol',
-    'swepol link',
-    'baltic cable',
+'nordbalt',
+'estlink',
+'estlink 1',
+'estlink 2',
+'swepol',
+'swepol link',
+'baltic cable',
 
-    'undersea cable',
-    'subsea cable',
-    'power cable',
-    'electric cable',
+'undersea cable',
+'subsea cable',
+'power cable',
+'electric cable',
 
-    'cable damage',
-    'cable break',
-    'cable cut',
-    'cable fault',
+'cable damage',
+'cable break',
+'cable cut',
+'cable fault',
 
-    'critical infrastructure',
-    'energy infrastructure',
+'critical infrastructure',
+'energy infrastructure',
 
-    'pipeline',
-    'offshore infrastructure',
+'pipeline',
+'offshore infrastructure',
 
-    'nord stream',
+'nord stream',
 
-    'anchor dragging',
-    'ship anchor',
+'anchor dragging',
+'ship anchor',
 
-    'shadow fleet',
+'shadow fleet',
 
-    // Säkerhet
+// Säkerhet
 
-    'sabotage',
+'sabotage',
 
-    'terror',
-    'terrorism',
-    'terrorist',
+'terror',
+'terrorism',
+'terrorist',
 
-    'espionage',
-    'spy',
-    'spying',
+'espionage',
+'spy',
+'spying',
 
-    'critical incident',
+'critical incident',
 
-    // Cyber
+// Cyber
 
-    'hack',
-    'hacker',
-    'hacking',
+'hack',
+'hacker',
+'hacking',
 
-    'cyber',
-    'cyberattack',
-    'cyber security',
-    'cybersecurity',
+'cyber',
+'cyberattack',
+'cyber security',
+'cybersecurity',
 
-    'ransomware',
+'ransomware',
 
-    // Drönare
+// Drönare
 
-    'drone',
-    'drones',
-    'uav',
+'drone',
+'drones',
+'uav',
 
-    // Explosivt
+// Explosivt
 
-    'explosive',
-    'explosives',
-    'bomb',
-    'blast',
+'explosive',
+'explosives',
+'bomb',
+'blast',
 
-    // Militärt
+// Militärt
 
-    'military',
-    'defense',
-    'defence',
+'military',
+'defense',
+'defence',
 
-    'army',
-    'navy',
-    'air force',
+'army',
+'navy',
+'air force',
 
-    'warship',
-    'frigate',
-    'destroyer',
-    'corvette',
+'warship',
+'frigate',
+'destroyer',
+'corvette',
 
-    'fighter',
-    'fighter jet',
-    'warplane',
+'fighter',
+'fighter jet',
+'warplane',
 
-    'reconnaissance',
-    'surveillance',
+'reconnaissance',
+'surveillance',
 
-    'missile',
-    'missiles',
+'missile',
+'missiles',
 
-    'exercise',
-    'military exercise',
+'exercise',
+'military exercise',
 
-    'naval exercise',
+'naval exercise',
 
-    'awacs',
+'awacs',
 
-    'submarine',
-    'submarines',
+'submarine',
+'submarines',
 
-    'electronic warfare',
+'electronic warfare',
 
-    'hybrid warfare',
+'hybrid warfare',
 
-    'air policing',
+'air policing',
 
-    'maritime security',
+'maritime security',
 
-    'coast guard',
+'coast guard',
 
-    'special forces',
+'special forces',
 
-    'baltops',
+'baltops',
 
-    'nato',
+'nato',
 
-    // Geografi
+// Geografi
 
-    'baltic',
-    'baltic sea',
-    'östersjön',
+'baltic',
+'baltic sea',
+'östersjön',
 
-    'gotland',
-    'bornholm',
-    'kaliningrad',
+'gotland',
+'bornholm',
+'kaliningrad',
 
-    'sweden',
-    'swedish',
+'sweden',
+'swedish',
 
-    'finland',
-    'finnish',
+'finland',
+'finnish',
 
-    'estonia',
-    'estonian',
+'estonia',
+'estonian',
 
-    'latvia',
-    'latvian',
+'latvia',
+'latvian',
 
-    'lithuania',
-    'lithuanian',
+'lithuania',
+'lithuanian',
 
-    'poland',
-    'polish',
+'poland',
+'polish',
 
-    'denmark',
-    'danish',
+'denmark',
+'danish',
 
-    'germany',
-    'german',
+'germany',
+'german',
 
-    // Ryssland/Ukraina
+// Ryssland/Ukraina
 
-    'russia',
-    'russian',
+'russia',
+'russian',
 
-    'ukraine',
-    'ukrainian',
+'ukraine',
+'ukrainian',
 
-    'moscow',
+'moscow',
 
-    'putin',
-    'kremlin',
+'putin',
+'kremlin',
 
-    // USA/Kina
+// USA/Kina
 
-    'trump',
+'trump',
 
-    'china',
-    'chinese'
+'china',
+'chinese'
 ];
-// ======================================
-// PRIORITET 1
-// ======================================
-
-const droneKeywords = [
-...
-];
-
-const priorityCountries = [
-...
-];
-
-const priorityLocations = {
-...
-};
-
-const activeAlerts = new Set();
-
-function createPriorityAlert(country) {
-...
-}
 
 // ======================================
 // LIVE-KLOCKA
@@ -326,27 +302,27 @@ function createPriorityAlert(country) {
 
 function updateClock() {
 
-    const now = new Date();
+const now = new Date();
 
-    const clock =
-        document.getElementById(
-            'live-clock'
-        );
+const clock =
+document.getElementById(
+'live-clock'
+);
 
-    if (clock) {
+if (clock) {
 
-        clock.textContent =
-            now.toLocaleTimeString('sv-SE');
+clock.textContent =
+now.toLocaleTimeString('sv-SE');
 
-    }
+}
 
 }
 
 updateClock();
 
 setInterval(
-    updateClock,
-    1000
+updateClock,
+1000
 );
 
 // ======================================
@@ -357,33 +333,33 @@ let nextRefresh = 60;
 
 function updateRefreshCounter() {
 
-    const element =
-        document.getElementById(
-            'next-update'
-        );
+const element =
+document.getElementById(
+'next-update'
+);
 
-    if (!element) return;
+if (!element) return;
 
-    element.textContent =
-        'Nästa sökning om: ' +
-        nextRefresh +
-        ' sek';
+element.textContent =
+'Nästa sökning om: ' +
+nextRefresh +
+' sek';
 
-    nextRefresh--;
+nextRefresh--;
 
-    if (nextRefresh < 0) {
+if (nextRefresh < 0) {
 
-        nextRefresh = 60;
+nextRefresh = 60;
 
-    }
+}
 
 }
 
 updateRefreshCounter();
 
 setInterval(
-    updateRefreshCounter,
-    1000
+updateRefreshCounter,
+1000
 );
 
 // ======================================
@@ -392,19 +368,19 @@ setInterval(
 
 function showTab(tabName) {
 
-    document
-        .querySelectorAll('.feed-container')
-        .forEach(feed => {
+document
+.querySelectorAll('.feed-container')
+.forEach(feed => {
 
-            feed.classList.add('hidden');
+feed.classList.add('hidden');
 
-        });
+});
 
-    document
-        .getElementById(
-            tabName + '-feed'
-        )
-        .classList.remove('hidden');
+document
+.getElementById(
+tabName + '-feed'
+)
+.classList.remove('hidden');
 
 }
 
@@ -418,85 +394,85 @@ let firstLoad = true;
 
 async function fetchFeeds() {
 
-    for (const feed of feeds) {
+for (const feed of feeds) {
 
-        try {
+try {
 
-            const response =
-                await fetch(
-                    proxyUrl +
-                    encodeURIComponent(feed)
-                );
+const response =
+await fetch(
+proxyUrl +
+encodeURIComponent(feed)
+);
 
-            if (!response.ok)
-                continue;
+if (!response.ok)
+continue;
 
-            const data =
-                await response.json();
+const data =
+await response.json();
 
-            if (!data.items)
-                continue;
+if (!data.items)
+continue;
 
-            data.items.forEach(item => {
+data.items.forEach(item => {
 
-                const content =
-                    (
-                        item.title +
-                        ' ' +
-                        (item.description || '')
-                    )
-                    .toLowerCase();
+const content =
+(
+item.title +
+' ' +
+(item.description || '')
+)
+.toLowerCase();
 
-                const relevant =
-                    securityKeywords.some(
-                        keyword =>
-                            content.includes(
-                                keyword.toLowerCase()
-                            )
-                    );
+const relevant =
+securityKeywords.some(
+keyword =>
+content.includes(
+keyword.toLowerCase()
+)
+);
 
-                if (
-                    relevant &&
-                    !seenArticles.has(item.link)
-                ) {
+if (
+relevant &&
+!seenArticles.has(item.link)
+) {
 
-                    seenArticles.add(item.link);
+seenArticles.add(item.link);
 
-                    renderArticle(
-                        item,
-                        !firstLoad
-                    );
+renderArticle(
+item,
+!firstLoad
+);
 
-                }
+}
 
-            });
+});
 
-        }
+}
 
-        catch(error) {
+catch(error) {
 
-            console.error(error);
+console.error(error);
 
-        }
+}
 
-    }
+}
 
-    const updateDiv =
-        document.getElementById(
-            'last-update'
-        );
+const updateDiv =
+document.getElementById(
+'last-update'
+);
 
-    if (updateDiv) {
+if (updateDiv) {
 
-        updateDiv.textContent =
-            'Senaste RSS: ' +
-            new Date().toLocaleTimeString(
-                'sv-SE'
-            );
+updateDiv.textContent =
+'Senaste RSS: ' +
+new Date().toLocaleTimeString(
+'sv-SE'
+);
 
-    }
+}
 
-    firstLoad = false;
+firstLoad = false;
 
 }
 
@@ -505,172 +481,119 @@ async function fetchFeeds() {
 // ======================================
 
 function renderArticle(
-    item,
-    isNew
+item,
+isNew
 ) {
 
-    const articleDate =
-        new Date(item.pubDate);
+const articleDate =
+new Date(item.pubDate);
 
-    const now =
-        new Date();
+const now =
+new Date();
 
-    const diffDays =
-        Math.floor(
-            (now - articleDate) /
-            86400000
-        );
+const diffDays =
+Math.floor(
+(now - articleDate) /
+86400000
+);
 
-    if (diffDays > 5) {
-        return;
-    }
+if (diffDays > 5) {
+return;
+}
 
-    let container;
+let container;
 
-    if (diffDays < 1) {
+if (diffDays < 1) {
 
-        container =
-            document.getElementById(
-                'today-feed'
-            );
-
-    }
-
-    else if (diffDays < 2) {
-
-        container =
-            document.getElementById(
-                'yesterday-feed'
-            );
-
-    }
-
-    else {
-
-        container =
-            document.getElementById(
-                'older-feed'
-            );
-
-    }
-
-    const div =
-        document.createElement(
-            'div'
-        );
-
-    div.className =
-        'news-item';
-const contentText =
-    (
-        item.title +
-        ' ' +
-        (item.description || '')
-    )
-    .toLowerCase();
-
-const isDroneRelated =
-    droneKeywords.some(
-        keyword =>
-            contentText.includes(
-                keyword.toLowerCase()
-            )
-    );
-
-const isCountryRelated =
-    priorityCountries.some(
-        country =>
-            contentText.includes(
-                country.toLowerCase()
-            )
-    );
-
-const isPriorityOne =
-    isDroneRelated &&
-    isCountryRelated;
-
-if (isPriorityOne) {
-
-    div.classList.add(
-        'priority-one'
-    );
-
-    priorityCountries.forEach(
-        country => {
-
-            if (
-                contentText.includes(
-                    country.toLowerCase()
-                )
-            ) {
-
-                createPriorityAlert(
-                    country
-                );
-
-            }
-
-        }
-    );
+container =
+document.getElementById(
+'today-feed'
+);
 
 }
 
-    if (isNew) {
+else if (diffDays < 2) {
 
-        div.classList.add(
-            'new-flash'
-        );
+container =
+document.getElementById(
+'yesterday-feed'
+);
 
-    }
+}
 
-    const articleLink =
-        document.createElement(
-            'a'
-        );
+else {
 
-    articleLink.href =
-        item.link;
+container =
+document.getElementById(
+'older-feed'
+);
 
-    articleLink.target =
-        '_blank';
+}
 
-    articleLink.rel =
-        'noopener noreferrer';
+const div =
+document.createElement(
+'div'
+);
 
-    articleLink.textContent =
-        item.title;
+div.className =
+'news-item';
 
-    const sourceDiv =
-        document.createElement(
-            'div'
-        );
+if (isNew) {
 
-    sourceDiv.className =
-        'source';
+div.classList.add(
+'new-flash'
+);
 
-    sourceDiv.textContent =
-        articleDate.toLocaleTimeString(
-            'sv-SE',
-            {
-                hour: '2-digit',
-                minute: '2-digit'
-            }
-        );
+}
 
-    div.appendChild(articleLink);
-    div.appendChild(sourceDiv);
+const articleLink =
+document.createElement(
+'a'
+);
 
-    container.prepend(div);
+articleLink.href =
+item.link;
 
-    while (
-        container.children.length > 75
-    ) {
+articleLink.target =
+'_blank';
 
-        container.removeChild(
-            container.lastChild
-        );
+articleLink.rel =
+'noopener noreferrer';
 
-    }
+articleLink.textContent =
+item.title;
+
+const sourceDiv =
+document.createElement(
+'div'
+);
+
+sourceDiv.className =
+'source';
+
+sourceDiv.textContent =
+articleDate.toLocaleTimeString(
+'sv-SE',
+{
+hour: '2-digit',
+minute: '2-digit'
+}
+);
+
+div.appendChild(articleLink);
+div.appendChild(sourceDiv);
+
+container.prepend(div);
+
+while (
+container.children.length > 75
+) {
+
+container.removeChild(
+container.lastChild
+);
+
+}
 
 }
 
@@ -682,8 +605,8 @@ fetchFeeds();
 
 setInterval(() => {
 
-    fetchFeeds();
+fetchFeeds();
 
-    nextRefresh = 60;
+nextRefresh = 60;
 
 }, 60000);
