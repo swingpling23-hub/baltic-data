@@ -1,117 +1,32 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    background-color: #121212;
-    color: #e0e0e0;
-    font-family: Segoe UI, sans-serif;
-    height: 100vh;
-}
-
-.dashboard-container {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-template-rows: 1fr 1fr;
-    height: 100vh;
-    gap: 10px;
-    padding: 10px;
-}
-
-.panel {
-    background: #1e1e1e;
-    border: 1px solid #333;
-    border-radius: 8px;
-
-    display: flex;
-    flex-direction: column;
-
-    padding: 15px;
-    overflow: hidden;
-}
-
-#map-section {
-    grid-column: 1;
-    grid-row: 1;
-}
-
-#cables-section {
-    grid-column: 1;
-    grid-row: 2;
-}
-
-#osint-section {
-    grid-column: 2;
-    grid-row: 1 / span 2;
-}
-
-h2 {
-    color: #4da6ff;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #333;
-    padding-bottom: 5px;
-    font-size: 1rem;
-}
-
-#map-container,
-#cable-map {
+#overview-map {
     flex: 1;
     min-height: 300px;
     border-radius: 6px;
-    overflow: hidden;
 }
 
-.feed-container {
+.tabs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.tab-button {
     flex: 1;
-    overflow-y: auto;
-}
-
-.news-item {
-    padding: 12px;
-    border-bottom: 1px solid #333;
-}
-
-.news-item a {
+    background: #222;
     color: white;
-    text-decoration: none;
-    font-weight: bold;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
 }
 
-.news-item a:hover {
-    color: #4da6ff;
+.tab-button:hover {
+    background: #333;
 }
 
-.source {
-    margin-top: 4px;
-    color: #999;
-    font-size: 0.8rem;
+.tab-button.active {
+    background: #4da6ff;
 }
 
-@keyframes flashAlert {
-    0% {
-        background: rgba(255,0,0,0.8);
-    }
-
-    25% {
-        background: rgba(255,0,0,0.3);
-    }
-
-    50% {
-        background: rgba(255,0,0,0.8);
-    }
-
-    75% {
-        background: rgba(255,0,0,0.3);
-    }
-
-    100% {
-        background: transparent;
-    }
-}
-
-.news-item.new-flash {
-    animation: flashAlert 4s ease;
-    border-left: 5px solid #ff4444;
+.hidden {
+    display: none;
 }
