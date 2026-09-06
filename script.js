@@ -4,19 +4,26 @@ if (Notification.permission !== "granted" && Notification.permission !== "denied
 }
 
 // Initiera elkabelskartan nere till vänster och centrera över Östersjön/Gotland
-const cableMap = L.map('cable-map').setView([57.5, 18.5], 7);
+const cableMap = L.map('cable-map', {
+    zoomControl: true,
+    attributionControl: false
+}).setView([57.5, 18.5], 7);
 
+// Mörk bakgrundskarta
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '© OpenStreetMap, EMODnet'
+    maxZoom: 19
 }).addTo(cableMap);
 
-// Lägg till EMODnet-lager specifikt för undervattensströmkablar (kraftkablar)
-L.tileLayer.wms('https://ows.emodnet-humanactivities.eu/wms?', {
-    layers: 'pcablesbshcontis',
-    format: 'image/png',
-    transparent: true,
-    attribution: '© EMODnet Human Activities'
+// Lägg till OpenSeaMap sjökortslager (visar undervattenskablar, ledningar och farleder)
+L.tileLayer('https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: 'Map data: © OpenStreetMap contributors, OpenSeaMap'
 }).addTo(cableMap);
+
+// Tvinga fram kartomritning så att den inte låser sig i flexbox/grid på plattan
+setTimeout(() => {
+    cableMap.invalidateSize();
+}, 300);
 
 // Proxy för att kringgå CORS-blockeringar när vi hämtar RSS
 const proxyUrl = 'https://api.rss2json.com/v1/api.json?rss_url=';
