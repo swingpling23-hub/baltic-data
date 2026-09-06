@@ -54,10 +54,6 @@ h2 {
     grid-row: 1 / span 2;
 }
 
-/* ==========================
-   KARTOR
-   ========================== */
-
 #overview-map,
 #cable-map {
     flex-grow: 1;
@@ -67,28 +63,25 @@ h2 {
     background-color: #0a0a0a;
 }
 
-/* ==========================
-   LIVE-KLOCKA
-   ========================== */
-
 #live-clock {
     text-align: right;
     color: #00ff88;
     font-size: 1.2rem;
     font-weight: bold;
-    margin-bottom: 2px;
 }
 
 #last-update {
     text-align: right;
     color: #4da6ff;
     font-size: 0.85rem;
-    margin-bottom: 10px;
 }
 
-/* ==========================
-   FLIKAR
-   ========================== */
+#next-update {
+    text-align: right;
+    color: #ffaa00;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+}
 
 .tabs {
     display: flex;
@@ -104,7 +97,6 @@ h2 {
     padding: 10px;
     border-radius: 4px;
     cursor: pointer;
-    transition: 0.2s ease;
 }
 
 .tab-button:hover {
@@ -113,26 +105,16 @@ h2 {
 
 .tab-button.active {
     background: #4da6ff;
-    color: white;
 }
-
-/* ==========================
-   FLÖDEN
-   ========================== */
 
 .feed-container {
     flex-grow: 1;
     overflow-y: auto;
-    min-height: 0;
 }
 
 .hidden {
     display: none;
 }
-
-/* ==========================
-   NYHETER
-   ========================== */
 
 .news-item {
     padding: 12px;
@@ -144,7 +126,6 @@ h2 {
     text-decoration: none;
     font-weight: bold;
     display: block;
-    line-height: 1.4;
 }
 
 .news-item a:hover {
@@ -157,31 +138,13 @@ h2 {
     margin-top: 4px;
 }
 
-.info-message {
-    padding: 15px;
-    color: #999;
-    text-align: center;
-}
-
-/* ==========================
-   BLINKANDE NYHETER
-   ========================== */
-
 @keyframes flashAlert {
 
     0% {
         background-color: rgba(255, 0, 0, 0.8);
     }
 
-    25% {
-        background-color: rgba(255, 0, 0, 0.2);
-    }
-
     50% {
-        background-color: rgba(255, 0, 0, 0.8);
-    }
-
-    75% {
         background-color: rgba(255, 0, 0, 0.2);
     }
 
@@ -193,25 +156,4 @@ h2 {
 .news-item.new-flash {
     animation: flashAlert 4s ease;
     border-left: 4px solid #ff4444;
-}
-
-/* ==========================
-   SCROLLBAR
-   ========================== */
-
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #1a1a1a;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #444;
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #666;
 }
