@@ -7,20 +7,16 @@ if (Notification.permission !== "granted" && Notification.permission !== "denied
 const cableMap = L.map('cable-map').setView([58.0, 19.5], 5);
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '© OpenStreetMap, TeleGeography'
+    attribution: '© OpenStreetMap, EMODnet'
 }).addTo(cableMap);
 
-// Hämta kablar via stabil ArcGIS-GeoJSON-tjänst
-const cableGeoJSONUrl = 'https://services.arcgis.com/6DIQcwlPy8knb6sg/arcgis/rest/services/SubmarineCables/FeatureServer/2/query?where=1%3D1&outFields=*&f=geojson';
-
-fetch(cableGeoJSONUrl)
-    .then(res => res.json())
-    .then(data => {
-        L.geoJSON(data, {
-            style: { color: '#ff9900', weight: 2, opacity: 0.8 }
-        }).addTo(cableMap);
-    })
-    .catch(err => console.error("Kunde inte ladda kabelfiler:", err));
+// Lägg till officiellt EMODnet-lager för kraft- och undervattenskablar
+L.tileLayer.wms('https://ows.emodnet-humanactivities.eu/wms?', {
+    layers: 'cables',
+    format: 'image/png',
+    transparent: true,
+    attribution: '© EMODnet Human Activities'
+}).addTo(cableMap);
 
 // Proxy för att kringgå CORS-blockeringar när vi hämtar RSS
 const proxyUrl = 'https://api.rss2json.com/v1/api.json?rss_url=';
