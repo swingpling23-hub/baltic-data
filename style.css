@@ -1,79 +1,79 @@
-• {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-background-color: #121212;
-color: #e0e0e0;
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-height: 100vh;
-overflow: hidden;
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .dashboard-container {
-display: grid;
-grid-template-columns: 35% 65%;
-grid-template-rows: 50% 50%;
-height: 100vh;
-gap: 10px;
-padding: 10px;
+    display: grid;
+    grid-template-columns: 35% 65%;
+    grid-template-rows: 50% 50%;
+    height: 100vh;
+    gap: 10px;
+    padding: 10px;
 }
 
 .panel {
-background: #1e1e1e;
-border: 1px solid #333;
-border-radius: 8px;
-display: flex;
-flex-direction: column;
-padding: 15px;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
 }
 
 h2 {
-font-size: 1.1rem;
-margin-bottom: 10px;
-color: #4da6ff;
-border-bottom: 1px solid #333;
-padding-bottom: 5px;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #4da6ff;
+    border-bottom: 1px solid #333;
+    padding-bottom: 5px;
 }
 
 #map-section { grid-column: 1; grid-row: 1; }
-#gov-section { grid-column: 1; grid-row: 2; }
+#cables-section { grid-column: 1; grid-row: 2; }
 #osint-section { grid-column: 2; grid-row: 1 / span 2; }
 
-#map-container {
-flex-grow: 1;
-border-radius: 4px;
-overflow: hidden;
-background-color: #0a0a0a;
+#map-container, #cable-map {
+    flex-grow: 1;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #0a0a0a;
 }
 
 .feed-container {
-flex-grow: 1;
-overflow-y: auto;
+    flex-grow: 1;
+    overflow-y: auto;
 }
 
 .news-item {
-padding: 12px;
-border-bottom: 1px solid #333;
+    padding: 12px;
+    border-bottom: 1px solid #333;
 }
 
 .news-item a {
-color: #fff;
-text-decoration: none;
-font-weight: bold;
-display: block;
-margin-bottom: 4px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
 }
 
 .news-item a:hover {
-color: #4da6ff;
+    color: #4da6ff;
 }
 
 .news-item .source {
-font-size: 0.8rem;
-color: #888;
-text-transform: uppercase;
-letter-spacing: 0.5px;
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
