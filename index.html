@@ -4,35 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baltic OSINT Dashboard</title>
+
     <link rel="stylesheet" href="style.css">
-    <!-- Leaflet CSS för elkabelskartan -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 </head>
+
 <body>
-    <div class="dashboard-container">
-        <!-- Uppe till vänster: MarineTraffic -->
-        <section id="map-section" class="panel">
-            <h2>Östersjön: MarineTraffic Live</h2>
-            <div id="map-container">
-                <iframe name="marinetraffic" id="marinetraffic" width="100%" height="100%" scrolling="no" frameborder="0" src="https://www.marinetraffic.com/en/ais/embed/mapv2/?zoom=5&lat=57.5&lon=19.5&maptype=4&shownames=false&mmsi=0&fleet=0&shiptype=0"></iframe>
-            </div>
-        </section>
 
-        <!-- Nere till vänster: Högspänningskablar i Östersjön -->
-        <section id="cables-section" class="panel">
-            <h2>Högspänningskablar (Östersjön)</h2>
-            <div id="cable-map"></div>
-        </section>
+<div class="dashboard-container">
 
-        <!-- Höger sida: Säkerhets- och OSINT-nyheter -->
-        <section id="osint-section" class="panel">
-            <h2>Säkerhet & OSINT (Östersjön / Europa)</h2>
-            <div id="osint-feed" class="feed-container"></div>
-        </section>
-    </div>
+    <section id="map-section" class="panel">
+        <h2>Östersjön: MarineTraffic Live</h2>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="script.js"></script>
+        <div id="map-container">
+
+            <iframe
+                id="marinetraffic"
+                width="100%"
+                height="100%"
+                frameborder="0"
+                scrolling="no"
+                src="https://www.marinetraffic.com/en/ais/embed/mapv2/?zoom=5&lat=57.5&lon=19.5&maptype=4&shownames=false&mmsi=0&fleet=0&shiptype=0">
+            </iframe>
+
+        </div>
+    </section>
+
+    <section id="cables-section" class="panel">
+        <h2>Högspänningskablar i Östersjön</h2>
+        <div id="cable-map"></div>
+    </section>
+
+    <section id="osint-section" class="panel">
+        <h2>Säkerhet & OSINT</h2>
+        <div id="osint-feed" class="feed-container"></div>
+    </section>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="script.js"></script>
+
 </body>
 </html>
