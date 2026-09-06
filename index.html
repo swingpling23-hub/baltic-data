@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baltic OSINT Dashboard</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Leaflet CSS för elkabelskartan -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- Uppe till vänster: MarineTraffic -->
+        <!-- Vänster sida: MarineTraffic -->
         <section id="map-section" class="panel">
             <h2>Östersjön: MarineTraffic Live</h2>
             <div id="map-container">
@@ -18,21 +16,13 @@
             </div>
         </section>
 
-        <!-- Höger sida: OSINT (Notiser aktiverade) -->
+        <!-- Höger sida: OSINT & Nyheter -->
         <section id="osint-section" class="panel">
             <h2>Live OSINT & Nyheter</h2>
             <div id="osint-feed" class="feed-container"></div>
         </section>
-
-        <!-- Nere till vänster: Elkablar i Östersjön -->
-        <section id="cables-section" class="panel">
-            <h2>Undervattenskablar i Östersjön</h2>
-            <div id="cable-map"></div>
-        </section>
     </div>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
