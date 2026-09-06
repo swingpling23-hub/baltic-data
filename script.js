@@ -10,8 +10,8 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
     attribution: '© OpenStreetMap, TeleGeography'
 }).addTo(cableMap);
 
-// Hämta öppen data för undervattenskablar
-fetch('https://raw.githubusercontent.com/telegeography/www.submarinecablemap.com/master/web/public/api/v3/cable/cable-geo.json')
+// Hämta öppen data för undervattenskablar via en stabil spegling
+fetch('https://raw.githubusercontent.com/lifewinning/submarine-cable-taps/master/data/submarine_cables.geojson')
     .then(res => res.json())
     .then(data => {
         L.geoJSON(data, {
