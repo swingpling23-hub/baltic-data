@@ -10,20 +10,16 @@ const cableMap = L.map('cable-map', {
 
 // Mörk bakgrundskarta
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '© OpenStreetMap, TeleGeography'
+    attribution: '© OpenStreetMap, EMODnet'
 }).addTo(cableMap);
 
-// Hämta och rita ut elkablar via stabil GeoJSON-källa
-const cableGeoJSONUrl = 'https://services.arcgis.com/6DIQcwlPy8knb6sg/arcgis/rest/services/SubmarineCables/FeatureServer/2/query?where=1%3D1&outFields=*&f=geojson';
-
-fetch(cableGeoJSONUrl)
-    .then(res => res.json())
-    .then(data => {
-        L.geoJSON(data, {
-            style: { color: '#ff9900', weight: 2.5, opacity: 0.9 }
-        }).addTo(cableMap);
-    })
-    .catch(err => console.error("Kunde inte ladda kablar:", err));
+// Lägg till EMODnet WMS-lager enbart för undervattensströmkablar (kraftkablar)
+L.tileLayer.wms('https://ows.emodnet-humanactivities.eu/wms?', {
+    layers: 'pcablesbshcontis',
+    format: 'image/png',
+    transparent: true,
+    attribution: '© EMODnet Human Activities'
+}).addTo(cableMap);
 
 // Tvinga fram kartomritning för att den inte ska fastna i rutan
 setTimeout(() => {
