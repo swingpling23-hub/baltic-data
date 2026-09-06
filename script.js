@@ -3,29 +3,6 @@ if (Notification.permission !== "granted" && Notification.permission !== "denied
     Notification.requestPermission();
 }
 
-// Initiera elkabelskartan nere till vänster och centrera över Östersjön
-const cableMap = L.map('cable-map', {
-    zoomControl: true
-}).setView([57.5, 18.5], 6);
-
-// Mörk bakgrundskarta
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '© OpenStreetMap, EMODnet'
-}).addTo(cableMap);
-
-// Lägg till EMODnet WMS-lager enbart för undervattensströmkablar (kraftkablar)
-L.tileLayer.wms('https://ows.emodnet-humanactivities.eu/wms?', {
-    layers: 'pcablesbshcontis',
-    format: 'image/png',
-    transparent: true,
-    attribution: '© EMODnet Human Activities'
-}).addTo(cableMap);
-
-// Tvinga fram kartomritning för att den inte ska fastna i rutan
-setTimeout(() => {
-    cableMap.invalidateSize();
-}, 400);
-
 // Proxy för att kringgå CORS-blockeringar när vi hämtar RSS
 const proxyUrl = 'https://api.rss2json.com/v1/api.json?rss_url=';
 let seenOsintArticles = new Set();
