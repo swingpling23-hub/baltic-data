@@ -14,7 +14,8 @@ body {
 
 .dashboard-container {
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 35% 65%;
+    grid-template-rows: 50% 50%;
     height: 100vh;
     gap: 10px;
     padding: 10px;
@@ -38,15 +39,11 @@ h2 {
     padding-bottom: 5px;
 }
 
-#map-section {
-    grid-column: 1;
-}
+#map-section { grid-column: 1; grid-row: 1; }
+#cables-section { grid-column: 1; grid-row: 2; }
+#osint-section { grid-column: 2; grid-row: 1 / span 2; }
 
-#osint-section {
-    grid-column: 2;
-}
-
-#map-container {
+#map-container, #cable-map {
     flex-grow: 1;
     border-radius: 4px;
     overflow: hidden;
@@ -61,6 +58,7 @@ h2 {
 .news-item {
     padding: 12px;
     border-bottom: 1px solid #333;
+    transition: background-color 0.5s ease;
 }
 
 .news-item a {
@@ -80,4 +78,16 @@ h2 {
     color: #888;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+}
+
+/* Blinkande effekt för nya inkommande nyheter */
+@keyframes flashAlert {
+    0% { background-color: rgba(255, 77, 77, 0.6); }
+    50% { background-color: rgba(255, 77, 77, 0.2); }
+    100% { background-color: transparent; }
+}
+
+.news-item.new-flash {
+    animation: flashAlert 2.5s ease-out;
+    border-left: 4px solid #ff4d4d;
 }
