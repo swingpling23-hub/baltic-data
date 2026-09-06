@@ -540,6 +540,59 @@ function renderArticle(
 
     div.className =
         'news-item';
+const contentText =
+    (
+        item.title +
+        ' ' +
+        (item.description || '')
+    )
+    .toLowerCase();
+
+const isDroneRelated =
+    droneKeywords.some(
+        keyword =>
+            contentText.includes(
+                keyword.toLowerCase()
+            )
+    );
+
+const isCountryRelated =
+    priorityCountries.some(
+        country =>
+            contentText.includes(
+                country.toLowerCase()
+            )
+    );
+
+const isPriorityOne =
+    isDroneRelated &&
+    isCountryRelated;
+
+if (isPriorityOne) {
+
+    div.classList.add(
+        'priority-one'
+    );
+
+    priorityCountries.forEach(
+        country => {
+
+            if (
+                contentText.includes(
+                    country.toLowerCase()
+                )
+            ) {
+
+                createPriorityAlert(
+                    country
+                );
+
+            }
+
+        }
+    );
+
+}
 
     if (isNew) {
 
