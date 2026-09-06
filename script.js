@@ -1,20 +1,41 @@
 // ======================================
-// ÖVERSIKTSKARTA
+// OPENSEAMAP
 // ======================================
 
 const overviewMap = L.map('overview-map').setView([58.5, 18.5], 5);
 
+// OpenStreetMap bas
+
 L.tileLayer(
-    'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
-        attribution: '&copy; OpenStreetMap contributors',
-        maxZoom: 19
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
     }
 ).addTo(overviewMap);
+
+// OpenSeaMap ovanpå
+
+L.tileLayer(
+    'https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png',
+    {
+        attribution: '&copy; OpenSeaMap'
+    }
+).addTo(overviewMap);
+
+// Strategiska platser
 
 L.marker([57.65, 18.30])
     .addTo(overviewMap)
     .bindPopup('Gotland');
+
+L.marker([55.25, 14.90])
+    .addTo(overviewMap)
+    .bindPopup('Bornholm');
+
+L.marker([54.71, 20.50])
+    .addTo(overviewMap)
+    .bindPopup('Kaliningrad');
 
 L.marker([59.44, 24.75])
     .addTo(overviewMap)
@@ -28,6 +49,14 @@ L.marker([55.71, 21.13])
     .addTo(overviewMap)
     .bindPopup('Klaipeda');
 
+L.marker([54.53, 18.55])
+    .addTo(overviewMap)
+    .bindPopup('Gdynia');
+
+L.marker([56.16, 15.59])
+    .addTo(overviewMap)
+    .bindPopup('Karlskrona');
+
 
 // ======================================
 // KABELKARTA
@@ -36,52 +65,51 @@ L.marker([55.71, 21.13])
 const cableMap = L.map('cable-map').setView([58.0, 18.0], 5);
 
 L.tileLayer(
-    'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
-        attribution: '&copy; OpenStreetMap contributors',
-        maxZoom: 19
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
     }
 ).addTo(cableMap);
 
 fetch('baltic-power-cables.geojson')
-    .then(response => response.json())
-    .then(data => {
+.then(response => response.json())
+.then(data => {
 
-        L.geoJSON(data, {
+    L.geoJSON(data, {
 
-            style: {
-                color: '#00ffff',
-                weight: 4,
-                opacity: 0.9
-            },
+        style: {
+            color: '#00ffff',
+            weight: 4,
+            opacity: 0.9
+        },
 
-            onEachFeature: function(feature, layer) {
+        onEachFeature: function(feature, layer) {
 
-                layer.bindPopup(`
-                    <b>${feature.properties.name}</b><br>
-                    ${feature.properties.country}<br>
-                    ${feature.properties.type}
-                `);
+            layer.bindPopup(`
+                <b>${feature.properties.name}</b><br>
+                ${feature.properties.country}<br>
+                ${feature.properties.type}
+            `);
 
-            }
+        }
 
-        }).addTo(cableMap);
+    }).addTo(cableMap);
 
-    })
+})
+.catch(error => {
 
-    .catch(error => {
+    console.error(
+        'GeoJSON kunde inte läsas:',
+        error
+    );
 
-        console.error(
-            'Kunde inte läsa GeoJSON:',
-            error
-        );
-
-    });
+});
 
 setTimeout(() => {
 
-    cableMap.invalidateSize();
     overviewMap.invalidateSize();
+    cableMap.invalidateSize();
 
 }, 500);
 
@@ -91,15 +119,19 @@ setTimeout(() => {
 // ======================================
 
 const proxyUrl =
-    'https://api.rss2json.com/v1/api.json?rss_url=';
+'https://api.rss2json.com/v1/api.json?rss_url=';
 
 const feeds = [
 
-    'https://feeds.bbci.co.uk/news/world/europe/rss.xml',
+'https://feeds.bbci.co.uk/news/world/europe/rss.xml',
 
-    'https://www.svt.se/nyheter/rss.xml',
+'https://www.svt.se/nyheter/rss.xml',
 
-    'https://www.navalnews.com/feed/'
+'https://feeds.expressen.se/nyheter/',
+
+'https://rss.dw.com/xml/rss-en-eu',
+
+'https://www.navalnews.com/feed/'
 
 ];
 
@@ -110,61 +142,62 @@ const feeds = [
 
 const keywords = [
 
-    'drone',
-    'drones',
-    'uav',
+'drone',
+'drones',
+'uav',
 
-    'explosive',
-    'explosives',
-    'bomb',
+'explosive',
+'explosives',
+'bomb',
 
-    'sabotage',
+'sabotage',
 
-    'terror',
-    'terrorism',
-    'terrorist',
+'terror',
+'terrorism',
+'terrorist',
 
-    'hack',
-    'hacking',
-    'hacker',
-    'cyber',
-    'cyberattack',
+'hack',
+'hacker',
+'hacking',
+'cyber',
+'cyberattack',
 
-    'warplane',
-    'fighter',
-    'fighter jet',
+'warplane',
+'fighter',
+'fighter jet',
 
-    'defense',
-    'defence',
-    'military',
-    'army',
-    'navy',
+'defense',
+'defence',
+'military',
+'army',
+'navy',
 
-    'putin',
-    'kremlin',
+'putin',
+'kremlin',
 
-    'trump',
+'trump',
 
-    'nato',
+'nato',
 
-    'russia',
-    'russian',
+'russia',
+'russian',
 
-    'baltic',
-    'baltic sea',
-    'östersjön',
+'baltic',
+'baltic sea',
+'östersjön',
 
-    'critical infrastructure',
+'critical infrastructure',
 
-    'undersea cable',
-    'subsea cable',
+'undersea cable',
+'subsea cable',
 
-    'gotland'
+'gotland'
+
 ];
 
 
 // ======================================
-// FLIKHANTERING
+// FLIKAR
 // ======================================
 
 function showTab(tabName) {
@@ -172,20 +205,15 @@ function showTab(tabName) {
     document
         .querySelectorAll('.feed-container')
         .forEach(feed => {
+
             feed.classList.add('hidden');
+
         });
 
     document
         .getElementById(tabName + '-feed')
         .classList.remove('hidden');
 
-    document
-        .querySelectorAll('.tab-button')
-        .forEach(btn => {
-            btn.classList.remove('active');
-        });
-
-    event.target.classList.add('active');
 }
 
 
@@ -205,7 +233,8 @@ async function fetchFeeds() {
 
             const response =
                 await fetch(
-                    proxyUrl + encodeURIComponent(feed)
+                    proxyUrl +
+                    encodeURIComponent(feed)
                 );
 
             if (!response.ok)
@@ -219,17 +248,20 @@ async function fetchFeeds() {
 
             data.items.forEach(item => {
 
-                const content = (
-                    item.title +
-                    ' ' +
-                    (item.description || '')
-                ).toLowerCase();
-
-                const relevant = keywords.some(keyword =>
-                    content.includes(
-                        keyword.toLowerCase()
+                const content =
+                    (
+                        item.title +
+                        ' ' +
+                        (item.description || '')
                     )
-                );
+                    .toLowerCase();
+
+                const relevant =
+                    keywords.some(keyword =>
+                        content.includes(
+                            keyword.toLowerCase()
+                        )
+                    );
 
                 if (
                     relevant &&
@@ -240,7 +272,6 @@ async function fetchFeeds() {
 
                     renderArticle(
                         item,
-                        data.feed.title,
                         !firstLoad
                     );
 
@@ -250,30 +281,24 @@ async function fetchFeeds() {
 
         }
 
-        catch (error) {
+        catch(error) {
 
-            console.error(
-                'Fel vid hämtning:',
-                error
-            );
+            console.error(error);
 
         }
 
     }
 
     firstLoad = false;
+
 }
 
 
 // ======================================
-// RENDERA ARTIKEL
+// ARTIKLAR
 // ======================================
 
-function renderArticle(
-    item,
-    sourceTitle,
-    isNew
-) {
+function renderArticle(item, isNew) {
 
     const articleDate =
         new Date(item.pubDate);
@@ -283,8 +308,8 @@ function renderArticle(
 
     const diffDays =
         Math.floor(
-            (now - articleDate) /
-            86400000
+            (now - articleDate)
+            / 86400000
         );
 
     let container;
@@ -329,33 +354,16 @@ function renderArticle(
 
     }
 
-    const timeString =
-        articleDate.toLocaleString(
-            'sv-SE'
-        );
-
     div.innerHTML = `
-
-        ${item.link}
-
-           ${item.title}
-
-        </a>
-
-        <div class="source">
-
-            ${timeString}
-            |
-            ${sourceTitle}
-
-        </div>
-
+    ${item.link}
+       ${item.title}
+    </a>
     `;
 
     container.prepend(div);
 
     while (
-        container.children.length > 50
+        container.children.length > 75
     ) {
 
         container.removeChild(
