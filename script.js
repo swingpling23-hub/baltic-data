@@ -3,16 +3,16 @@ if (Notification.permission !== "granted" && Notification.permission !== "denied
     Notification.requestPermission();
 }
 
-// Initiera elkabelskartan nere till vänster
-const cableMap = L.map('cable-map').setView([58.0, 19.5], 5);
+// Initiera elkabelskartan nere till vänster och centrera över Östersjön/Gotland
+const cableMap = L.map('cable-map').setView([57.5, 18.5], 7);
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
     attribution: '© OpenStreetMap, EMODnet'
 }).addTo(cableMap);
 
-// Lägg till officiellt EMODnet-lager för kraft- och undervattenskablar
+// Lägg till EMODnet-lager specifikt för undervattensströmkablar (kraftkablar)
 L.tileLayer.wms('https://ows.emodnet-humanactivities.eu/wms?', {
-    layers: 'cables',
+    layers: 'pcablesbshcontis',
     format: 'image/png',
     transparent: true,
     attribution: '© EMODnet Human Activities'
