@@ -18,8 +18,6 @@ L.tileLayer(
     }
 ).addTo(overviewMap);
 
-// Strategiska platser
-
 [
     [57.65, 18.30, 'Gotland'],
     [55.25, 14.90, 'Bornholm'],
@@ -104,15 +102,15 @@ const proxyUrl =
 
 const feeds = [
 
-'https://feeds.bbci.co.uk/news/world/europe/rss.xml',
+    'https://feeds.bbci.co.uk/news/world/europe/rss.xml',
 
-'https://www.svt.se/nyheter/rss.xml',
+    'https://www.svt.se/nyheter/rss.xml',
 
-'https://feeds.expressen.se/nyheter/',
+    'https://feeds.expressen.se/nyheter/',
 
-'https://rss.dw.com/xml/rss-en-eu',
+    'https://rss.dw.com/xml/rss-en-eu',
 
-'https://www.navalnews.com/feed/'
+    'https://www.navalnews.com/feed/'
 
 ];
 
@@ -122,75 +120,162 @@ const feeds = [
 
 const securityKeywords = [
 
-'sabotage',
+    // Kabel- och energiinfrastruktur
 
-'drone',
-'drones',
-'uav',
+    'nordbalt',
+    'estlink',
+    'estlink 1',
+    'estlink 2',
+    'swepol',
+    'swepol link',
+    'baltic cable',
 
-'explosive',
-'explosives',
-'bomb',
+    'undersea cable',
+    'subsea cable',
+    'power cable',
+    'electric cable',
 
-'terror',
-'terrorism',
-'terrorist',
+    'cable damage',
+    'cable break',
+    'cable cut',
+    'cable fault',
 
-'hack',
-'hacker',
-'hacking',
-'cyber',
-'cyberattack',
+    'critical infrastructure',
+    'energy infrastructure',
 
-'warplane',
-'fighter',
-'fighter jet',
+    'pipeline',
+    'offshore infrastructure',
 
-'defense',
-'defence',
-'military',
-'army',
-'navy',
+    'nord stream',
 
-'putin',
-'kremlin',
+    'anchor dragging',
+    'ship anchor',
 
-'trump',
+    'shadow fleet',
 
-'nato',
+    // Säkerhet
 
-'russia',
-'russian',
+    'sabotage',
 
-'baltic',
-'baltic sea',
-'östersjön',
+    'terror',
+    'terrorism',
+    'terrorist',
 
-'critical infrastructure',
+    'espionage',
+    'spy',
+    'spying',
 
-'nordbalt',
-'estlink',
-'swepol',
-'baltic cable',
+    'critical incident',
 
-'undersea cable',
-'subsea cable',
-'power cable',
+    // Cyber
 
-'cable damage',
-'cable break',
-'cable cut',
+    'hack',
+    'hacker',
+    'hacking',
 
-'anchor dragging',
-'ship anchor',
+    'cyber',
+    'cyberattack',
+    'cyber security',
+    'cybersecurity',
 
-'shadow fleet',
+    'ransomware',
 
-'pipeline',
+    // Drönare
 
-'kaliningrad',
-'gotland',
-'bornholm'
+    'drone',
+    'drones',
+    'uav',
+
+    // Sprängämnen
+
+    'explosive',
+    'explosives',
+    'bomb',
+    'blast',
+
+    // Militärt
+
+    'military',
+    'defense',
+    'defence',
+
+    'army',
+    'navy',
+    'air force',
+
+    'warship',
+    'frigate',
+    'destroyer',
+    'corvette',
+
+    'fighter',
+    'fighter jet',
+    'warplane',
+
+    'reconnaissance',
+    'surveillance',
+
+    'missile',
+    'missiles',
+
+    'exercise',
+    'military exercise',
+
+    'nato',
+
+    // Geografi
+
+    'baltic',
+    'baltic sea',
+    'östersjön',
+
+    'gotland',
+    'bornholm',
+    'kaliningrad',
+
+    'sweden',
+    'swedish',
+
+    'finland',
+    'finnish',
+
+    'estonia',
+    'estonian',
+
+    'latvia',
+    'latvian',
+
+    'lithuania',
+    'lithuanian',
+
+    'poland',
+    'polish',
+
+    'denmark',
+    'danish',
+
+    'germany',
+    'german',
+
+    // Ryssland/Ukraina
+
+    'russia',
+    'russian',
+
+    'ukraine',
+    'ukrainian',
+
+    'moscow',
+
+    'putin',
+    'kremlin',
+
+    // USA/Kina
+
+    'trump',
+
+    'china',
+    'chinese'
 ];
 
 // ======================================
@@ -219,6 +304,43 @@ updateClock();
 
 setInterval(
     updateClock,
+    1000
+);
+
+// ======================================
+// NÄSTA RSS-SÖKNING
+// ======================================
+
+let nextRefresh = 60;
+
+function updateRefreshCounter() {
+
+    const element =
+        document.getElementById(
+            'next-update'
+        );
+
+    if (!element) return;
+
+    element.textContent =
+        'Nästa sökning om: ' +
+        nextRefresh +
+        ' sek';
+
+    nextRefresh--;
+
+    if (nextRefresh < 0) {
+
+        nextRefresh = 60;
+
+    }
+
+}
+
+updateRefreshCounter();
+
+setInterval(
+    updateRefreshCounter,
     1000
 );
 
@@ -254,8 +376,6 @@ let firstLoad = true;
 
 async function fetchFeeds() {
 
-    let foundArticles = 0;
-
     for (const feed of feeds) {
 
         try {
@@ -277,15 +397,13 @@ async function fetchFeeds() {
 
             data.items.forEach(item => {
 
-                const content = (
-
-                    item.title +
-
-                    ' ' +
-
-                    (item.description || '')
-
-                ).toLowerCase();
+                const content =
+                    (
+                        item.title +
+                        ' ' +
+                        (item.description || '')
+                    )
+                    .toLowerCase();
 
                 const relevant =
 
@@ -305,8 +423,6 @@ async function fetchFeeds() {
                 ) {
 
                     seenArticles.add(item.link);
-
-                    foundArticles++;
 
                     renderArticle(
                         item,
@@ -337,7 +453,9 @@ async function fetchFeeds() {
         updateDiv.textContent =
             'Senaste RSS: ' +
             new Date()
-            .toLocaleTimeString('sv-SE');
+            .toLocaleTimeString(
+                'sv-SE'
+            );
 
     }
 
@@ -365,8 +483,6 @@ function renderArticle(
             (now - articleDate) /
             86400000
         );
-
-    // Ignorera äldre än 5 dagar
 
     if (diffDays > 5) {
         return;
@@ -402,7 +518,9 @@ function renderArticle(
     }
 
     const div =
-        document.createElement('div');
+        document.createElement(
+            'div'
+        );
 
     div.className =
         'news-item';
@@ -416,7 +534,9 @@ function renderArticle(
     }
 
     const articleLink =
-        document.createElement('a');
+        document.createElement(
+            'a'
+        );
 
     articleLink.href =
         item.link;
@@ -431,7 +551,9 @@ function renderArticle(
         item.title;
 
     const sourceDiv =
-        document.createElement('div');
+        document.createElement(
+            'div'
+        );
 
     sourceDiv.className =
         'source';
@@ -469,7 +591,10 @@ function renderArticle(
 
 fetchFeeds();
 
-setInterval(
-    fetchFeeds,
-    60000
-);
+setInterval(() => {
+
+    fetchFeeds();
+
+    nextRefresh = 60;
+
+}, 60000);
