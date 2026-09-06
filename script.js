@@ -298,6 +298,27 @@ const securityKeywords = [
     'china',
     'chinese'
 ];
+// ======================================
+// PRIORITET 1
+// ======================================
+
+const droneKeywords = [
+...
+];
+
+const priorityCountries = [
+...
+];
+
+const priorityLocations = {
+...
+};
+
+const activeAlerts = new Set();
+
+function createPriorityAlert(country) {
+...
+}
 
 // ======================================
 // LIVE-KLOCKA
@@ -666,136 +687,3 @@ setInterval(() => {
     nextRefresh = 60;
 
 }, 60000);
-// ======================================
-// PRIORITET 1
-// ======================================
-
-const droneKeywords = [
-
-    'drone',
-    'drones',
-    'uav',
-
-    'drönare',
-    'drönar',
-
-    'drone attack',
-    'drone activity',
-
-    'suspected drone',
-
-    'unmanned aerial vehicle'
-
-];
-
-const priorityCountries = [
-
-    'sweden',
-    'swedish',
-    'sverige',
-
-    'norway',
-    'norwegian',
-    'norge',
-
-    'finland',
-    'finnish',
-
-    'denmark',
-    'danish',
-    'danmark',
-
-    'estonia',
-    'estonian',
-    'estland',
-
-    'latvia',
-    'latvian',
-    'lettland',
-
-    'lithuania',
-    'lithuanian',
-    'litauen',
-
-    'poland',
-    'polish',
-    'polen',
-
-    'germany',
-    'german',
-    'tyskland',
-
-    'france',
-    'french',
-    'frankrike'
-
-];
-const priorityLocations = {
-
-    sweden: [59.33, 18.06],
-    sverige: [59.33, 18.06],
-
-    norway: [59.91, 10.75],
-    norge: [59.91, 10.75],
-
-    finland: [60.17, 24.94],
-
-    denmark: [55.67, 12.56],
-    danmark: [55.67, 12.56],
-
-    estonia: [59.44, 24.75],
-    estland: [59.44, 24.75],
-
-    latvia: [56.95, 24.10],
-    lettland: [56.95, 24.10],
-
-    lithuania: [54.68, 25.28],
-    litauen: [54.68, 25.28],
-
-    poland: [52.23, 21.01],
-    polen: [52.23, 21.01],
-
-    germany: [52.52, 13.40],
-    tyskland: [52.52, 13.40],
-
-    france: [48.85, 2.35],
-    frankrike: [48.85, 2.35]
-
-};
-
-const activeAlerts = new Set();
-
-function createPriorityAlert(country) {
-
-    if (activeAlerts.has(country))
-        return;
-
-    activeAlerts.add(country);
-
-    const coords =
-        priorityLocations[
-            country.toLowerCase()
-        ];
-
-    if (!coords)
-        return;
-
-    L.circleMarker(coords, {
-
-        radius: 20,
-
-        color: '#ff0000',
-
-        fillColor: '#ff0000',
-
-        fillOpacity: 0.5,
-
-        weight: 4
-
-    })
-
-    .addTo(overviewMap)
-
-    .bindPopup('⚠️ PRIORITET 1');
-
-}
