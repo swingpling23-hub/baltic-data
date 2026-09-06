@@ -1,249 +1,475 @@
-// ===========================
-// Notiser
-// ===========================
+// ======================================
+// OPENSEAMAP + ÖSTERSJÖKARTA
+// ======================================
 
-if ("Notification" in window) {
-    if (
-        Notification.permission !== "granted" &&
-        Notification.permission !== "denied"
-    ) {
-        Notification.requestPermission();
-    }
-}
-
-// ===========================
-// Elkabelkarta
-// ===========================
-
-const cableMap = L.map("cable-map", {
-    zoomControl: true,
-    attributionControl: false
-}).setView([57.5, 18.5], 6);
+const overviewMap = L.map('overview-map').setView([58.5, 18.5], 5);
 
 L.tileLayer(
-    "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+        maxZoom: 19
+    }
+).addTo(overviewMap);
+
+L.tileLayer(
+    'https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png',
+    {
+        opacity: 0.9
+    }
+).addTo(overviewMap);
+
+// Strategiska platser
+
+[
+    [57.65, 18.30, 'Gotland'],
+    [55.25, 14.90, 'Bornholm'],
+    [54.71, 20.50, 'Kaliningrad'],
+    [59.44, 24.75, 'Tallinn'],
+    [60.17, 24.94, 'Helsingfors'],
+    [55.71, 21.13, 'Klaipeda'],
+    [54.53, 18.55, 'Gdynia'],
+    [56.16, 15.59, 'Karlskrona']
+].forEach(place => {
+
+    L.marker([place[0], place[1]])
+        .addTo(overviewMap)
+        .bindPopup(place[2]);
+
+});
+
+// ======================================
+// KABELKARTA
+// ======================================
+
+const cableMap = L.map('cable-map')
+    .setView([58.0, 18.0], 5);
+
+L.tileLayer(
+    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
         maxZoom: 19
     }
 ).addTo(cableMap);
 
-const cableLayer = L.tileLayer.wms(
-    "https://ows.emodnet-humanactivities.eu/wms?",
-    {
-        layers: "pcablesbshcontis",
-        format: "image/png",
-        transparent: true
-    }
-);
+fetch('baltic-power-cables.geojson')
 
-cableLayer.on("tileerror", function (e) {
-    console.error("WMS-fel:", e);
+.then(response => response.json())
+
+.then(data => {
+
+    L.geoJSON(data, {
+
+        style: {
+            color: '#00ffff',
+            weight: 4,
+            opacity: 0.9
+        },
+
+        onEachFeature: function(feature, layer) {
+
+            layer.bindPopup(`
+                <b>${feature.properties.name}</b><br>
+                ${feature.properties.country}<br>
+                ${feature.properties.type}
+            `);
+
+        }
+
+    }).addTo(cableMap);
+
+})
+
+.catch(error => {
+
+    console.error(
+        'GeoJSON kunde inte läsas:',
+        error
+    );
+
 });
 
-cableLayer.addTo(cableMap);
-
 setTimeout(() => {
+
+    overviewMap.invalidateSize();
     cableMap.invalidateSize();
+
 }, 500);
 
-// ===========================
-// RSS
-// ===========================
+// ======================================
+// RSS-KÄLLOR
+// ======================================
 
 const proxyUrl =
-    "https://api.rss2json.com/v1/api.json?rss_url=";
+'https://api.rss2json.com/v1/api.json?rss_url=';
 
-const feeds = {
-    osint: [
-        "https://www.svt.se/nyheter/utrikes/rss.xml",
-        "https://www.svt.se/nyheter/inrikes/rss.xml",
-        "https://rss.aftonbladet.se/rss2/small/pages/sections/senastenytt/",
-        "https://feeds.expressen.se/nyheter/"
-    ]
-};
+const feeds = [
 
-const securityKeywords = [
-    "sabotage",
-    "drönare",
-    "sprängning",
-    "spioneri",
-    "kabel",
-    "militär",
-    "försvar",
-    "östersjön",
-    "övning",
-    "incident"
+'https://feeds.bbci.co.uk/news/world/europe/rss.xml',
+
+'https://www.svt.se/nyheter/rss.xml',
+
+'https://feeds.expressen.se/nyheter/',
+
+'https://rss.dw.com/xml/rss-en-eu',
+
+'https://www.navalnews.com/feed/'
+
 ];
 
-let seenOsintArticles = new Set();
-let isFirstLoad = true;
+// ======================================
+// NYCKELORD
+// ======================================
 
-// ===========================
-// Hämta flöden
-// ===========================
+const securityKeywords = [
+
+'sabotage',
+
+'drone',
+'drones',
+'uav',
+
+'explosive',
+'explosives',
+'bomb',
+
+'terror',
+'terrorism',
+'terrorist',
+
+'hack',
+'hacker',
+'hacking',
+'cyber',
+'cyberattack',
+
+'warplane',
+'fighter',
+'fighter jet',
+
+'defense',
+'defence',
+'military',
+'army',
+'navy',
+
+'putin',
+'kremlin',
+
+'trump',
+
+'nato',
+
+'russia',
+'russian',
+
+'baltic',
+'baltic sea',
+'östersjön',
+
+'critical infrastructure',
+
+'nordbalt',
+'estlink',
+'swepol',
+'baltic cable',
+
+'undersea cable',
+'subsea cable',
+'power cable',
+
+'cable damage',
+'cable break',
+'cable cut',
+
+'anchor dragging',
+'ship anchor',
+
+'shadow fleet',
+
+'pipeline',
+
+'kaliningrad',
+'gotland',
+'bornholm'
+];
+
+// ======================================
+// LIVE-KLOCKA
+// ======================================
+
+function updateClock() {
+
+    const now = new Date();
+
+    const clock =
+        document.getElementById(
+            'live-clock'
+        );
+
+    if (clock) {
+
+        clock.textContent =
+            now.toLocaleTimeString('sv-SE');
+
+    }
+
+}
+
+updateClock();
+
+setInterval(
+    updateClock,
+    1000
+);
+
+// ======================================
+// FLIKAR
+// ======================================
+
+function showTab(tabName) {
+
+    document
+        .querySelectorAll('.feed-container')
+        .forEach(feed => {
+
+            feed.classList.add('hidden');
+
+        });
+
+    document
+        .getElementById(
+            tabName + '-feed'
+        )
+        .classList.remove('hidden');
+
+}
+
+// ======================================
+// NYHETER
+// ======================================
+
+const seenArticles = new Set();
+
+let firstLoad = true;
 
 async function fetchFeeds() {
 
     let foundArticles = 0;
 
-    for (const url of feeds.osint) {
+    for (const feed of feeds) {
 
         try {
 
-            const response = await fetch(
-                proxyUrl + encodeURIComponent(url)
-            );
+            const response =
+                await fetch(
+                    proxyUrl +
+                    encodeURIComponent(feed)
+                );
 
-            if (!response.ok) {
-                console.warn("Fel vid hämtning:", url);
+            if (!response.ok)
                 continue;
-            }
 
-            const data = await response.json();
+            const data =
+                await response.json();
 
-            if (!data.items) {
+            if (!data.items)
                 continue;
-            }
 
             data.items.forEach(item => {
 
-                const textToCheck =
-                    (item.title + " " +
-                        (item.description || ""))
-                    .toLowerCase();
+                const content = (
 
-                const isRelevant =
-                    securityKeywords.some(keyword =>
-                        textToCheck.includes(keyword)
+                    item.title +
+
+                    ' ' +
+
+                    (item.description || '')
+
+                ).toLowerCase();
+
+                const relevant =
+
+                    securityKeywords.some(
+                        keyword =>
+                            content.includes(
+                                keyword.toLowerCase()
+                            )
                     );
 
                 if (
-                    isRelevant &&
-                    !seenOsintArticles.has(item.link)
+
+                    relevant &&
+
+                    !seenArticles.has(item.link)
+
                 ) {
+
+                    seenArticles.add(item.link);
 
                     foundArticles++;
 
-                    seenOsintArticles.add(item.link);
-
                     renderArticle(
                         item,
-                        data.feed?.title || "Nyhetskälla",
-                        "osint-feed",
-                        !isFirstLoad
+                        !firstLoad
                     );
 
-                    if (
-                        !isFirstLoad &&
-                        "Notification" in window &&
-                        Notification.permission === "granted"
-                    ) {
-
-                        new Notification(
-                            "Säkerhetsvarning / OSINT",
-                            {
-                                body: item.title
-                            }
-                        );
-                    }
                 }
+
             });
 
-        } catch (error) {
-
-            console.error(
-                "Fel vid hämtning av flöde:",
-                error
-            );
         }
+
+        catch(error) {
+
+            console.error(error);
+
+        }
+
     }
 
-    const container =
-        document.getElementById("osint-feed");
+    const updateDiv =
+        document.getElementById(
+            'last-update'
+        );
 
-    if (
-        container.children.length === 0 &&
-        foundArticles === 0
-    ) {
-        container.innerHTML = `
-            <div class="info-message">
-                Inga säkerhetsrelaterade nyheter hittades.
-            </div>
-        `;
+    if (updateDiv) {
+
+        updateDiv.textContent =
+            'Senaste RSS: ' +
+            new Date()
+            .toLocaleTimeString('sv-SE');
+
     }
 
-    isFirstLoad = false;
+    firstLoad = false;
+
 }
 
-// ===========================
-// Rendera artikel
-// ===========================
+// ======================================
+// ARTIKLAR
+// ======================================
 
 function renderArticle(
     item,
-    sourceTitle,
-    targetId,
     isNew
 ) {
 
-    const container =
-        document.getElementById(targetId);
+    const articleDate =
+        new Date(item.pubDate);
 
-    if (!container) {
+    const now =
+        new Date();
+
+    const diffDays =
+        Math.floor(
+            (now - articleDate) /
+            86400000
+        );
+
+    // Ignorera äldre än 5 dagar
+
+    if (diffDays > 5) {
         return;
     }
 
-    const div = document.createElement("div");
-    div.className = "news-item";
+    let container;
+
+    if (diffDays < 1) {
+
+        container =
+            document.getElementById(
+                'today-feed'
+            );
+
+    }
+
+    else if (diffDays < 2) {
+
+        container =
+            document.getElementById(
+                'yesterday-feed'
+            );
+
+    }
+
+    else {
+
+        container =
+            document.getElementById(
+                'older-feed'
+            );
+
+    }
+
+    const div =
+        document.createElement('div');
+
+    div.className =
+        'news-item';
 
     if (isNew) {
-        div.classList.add("new-flash");
+
+        div.classList.add(
+            'new-flash'
+        );
+
     }
 
     const articleLink =
-        document.createElement("a");
+        document.createElement('a');
 
-    articleLink.href = item.link;
-    articleLink.target = "_blank";
-    articleLink.rel = "noopener noreferrer";
-    articleLink.textContent = item.title;
+    articleLink.href =
+        item.link;
+
+    articleLink.target =
+        '_blank';
+
+    articleLink.rel =
+        'noopener noreferrer';
+
+    articleLink.textContent =
+        item.title;
 
     const sourceDiv =
-        document.createElement("div");
+        document.createElement('div');
 
-    sourceDiv.className = "source";
-
-    const date = new Date(item.pubDate);
-
-    const timeString =
-        isNaN(date)
-            ? ""
-            : date.toLocaleTimeString(
-                "sv-SE",
-                {
-                    hour: "2-digit",
-                    minute: "2-digit"
-                }
-            );
+    sourceDiv.className =
+        'source';
 
     sourceDiv.textContent =
-        `${timeString} | ${sourceTitle}`;
+        articleDate
+        .toLocaleTimeString(
+            'sv-SE',
+            {
+                hour: '2-digit',
+                minute: '2-digit'
+            }
+        );
 
     div.appendChild(articleLink);
     div.appendChild(sourceDiv);
 
-    if (
-        container.querySelector(".info-message")
+    container.prepend(div);
+
+    while (
+        container.children.length > 75
     ) {
-        container.innerHTML = "";
+
+        container.removeChild(
+            container.lastChild
+        );
+
     }
 
-    container.prepend(div);
 }
 
-// ===========================
-// Start
-// ===========================
+// ======================================
+// START
+// ======================================
 
 fetchFeeds();
-setInterval(fetchFeeds, 180000);
+
+setInterval(
+    fetchFeeds,
+    60000
+);
