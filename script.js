@@ -1,4 +1,4 @@
-• // ======================================
+// ======================================
 // OPENSEAMAP + ÖSTERSJÖKARTA
 // ======================================
 
@@ -64,9 +64,11 @@ opacity: 0.9
 },
 
 onEachFeature: function(feature, layer) {
-
-layer.bindPopup(&lt;b&gt;${feature.properties.name}</b><br>
-${feature.properties.country}&lt;br&gt; ${feature.properties.type});
+layer.bindPopup(`
+    <b>${feature.properties.name}</b><br>
+    ${feature.properties.country}<br>
+    ${feature.properties.type}
+`);
 
 }
 
