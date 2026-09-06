@@ -1,7 +1,34 @@
-// Fråga om tillåtelse för notiser
+// Fråga om tillåtelse för notiser i webbläsaren
 if (Notification.permission !== "granted" && Notification.permission !== "denied") {
     Notification.requestPermission();
 }
+
+// Initiera elkabelskartan nere till vänster och centrera över Östersjön
+const cableMap = L.map('cable-map', {
+    zoomControl: true
+}).setView([57.5, 18.5], 6);
+
+// Mörk bakgrundskarta
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '© OpenStreetMap, TeleGeography'
+}).addTo(cableMap);
+
+// Hämta och rita ut elkablar via stabil GeoJSON-källa
+const cableGeoJSONUrl = 'https://services.arcgis.com/6DIQcwlPy8knb6sg/arcgis/rest/services/SubmarineCables/FeatureServer/2/query?where=1%3D1&outFields=*&f=geojson';
+
+fetch(cableGeoJSONUrl)
+    .then(res => res.json())
+    .then(data => {
+        L.geoJSON(data, {
+            style: { color: '#ff9900', weight: 2.5, opacity: 0.9 }
+        }).addTo(cableMap);
+    })
+    .catch(err => console.error("Kunde inte ladda kablar:", err));
+
+// Tvinga fram kartomritning för att den inte ska fastna i rutan
+setTimeout(() => {
+    cableMap.invalidateSize();
+}, 400);
 
 // Proxy för att kringgå CORS-blockeringar när vi hämtar RSS
 const proxyUrl = 'https://api.rss2json.com/v1/api.json?rss_url=';
