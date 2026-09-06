@@ -3,14 +3,29 @@ if (Notification.permission !== "granted" && Notification.permission !== "denied
     Notification.requestPermission();
 }
 
+// Initiera elkabelskartan nere till vänster
+const cableMap = L.map('cable-map').setView([58.0, 19.5], 5);
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '© OpenStreetMap, TeleGeography'
+}).addTo(cableMap);
+
+// Hämta öppen data för undervattenskablar
+fetch('https://raw.githubusercontent.com/telegeography/www.submarinecablemap.com/master/web/public/api/v3/cable/cable-geo.json')
+    .then(res => res.json())
+    .then(data => {
+        L.geoJSON(data, {
+            style: { color: '#ff9900', weight: 2, opacity: 0.8 }
+        }).addTo(cableMap);
+    })
+    .catch(err => console.error("Kunde inte ladda kabelfiler:", err));
+
 // Proxy för att kringgå CORS-blockeringar när vi hämtar RSS
 const proxyUrl = 'https://api.rss2json.com/v1/api.json?rss_url=';
 
-// Håller koll på vilka OSINT-artiklar vi redan skickat notis om
 let seenOsintArticles = new Set();
 let isFirstLoad = true;
 
-// Samlade RSS-flöden
 const feeds = {
     osint: [
         'https://www.svt.se/nyheter/rss.xml',
@@ -19,28 +34,21 @@ const feeds = {
         'https://nitter.poast.org/OSINTtechnical/rss',
         'https://nitter.poast.org/OSINTdefender/rss',
         'https://nitter.poast.org/wartranslated/rss'
-    ],
-    gov: [
-        'https://polisen.se/aktuellt/rss/hela-landet/nyheter-och-handelser/',
-        'https://www.forsvarsmakten.se/sv/rss/nyheter/'
     ]
 };
 
 async function fetchFeeds() {
-    // 1. Hämta och rendera OSINT-flöden (med notiser)
     for (const url of feeds.osint) {
         try {
             const response = await fetch(proxyUrl + encodeURIComponent(url));
             if (!response.ok) continue;
             const data = await response.json();
             
-            // Kolla de 3 senaste uppdateringarna per källa
             data.items.slice(0, 3).forEach(item => {
                 if (!seenOsintArticles.has(item.link)) {
                     seenOsintArticles.add(item.link);
                     renderArticle(item, data.feed.title, 'osint-feed');
                     
-                    // Skicka bara notiser för nya inlägg EFTER första laddningen
                     if (!isFirstLoad && Notification.permission === "granted") {
                         new Notification("OSINT Uppdatering", {
                             body: item.title,
@@ -53,23 +61,6 @@ async function fetchFeeds() {
             console.error("Fel vid hämtning av OSINT:", error); 
         }
     }
-
-    // 2. Hämta Myndigheter (utan notiser)
-    document.getElementById('gov-feed').innerHTML = ''; // Rensa för att bygga om listan rent
-    for (const url of feeds.gov) {
-        try {
-            const response = await fetch(proxyUrl + encodeURIComponent(url));
-            if (!response.ok) continue;
-            const data = await response.json();
-            
-            data.items.slice(0, 5).forEach(item => {
-                renderArticle(item, data.feed.title, 'gov-feed');
-            });
-        } catch (error) { 
-            console.error("Fel vid hämtning av myndighetsdata:", error); 
-        }
-    }
-    
     isFirstLoad = false;
 }
 
@@ -78,7 +69,6 @@ function renderArticle(item, sourceTitle, targetId) {
     const div = document.createElement('div');
     div.className = 'news-item';
     
-    // Formatera datum snyggt
     const date = new Date(item.pubDate);
     const timeString = date.toLocaleTimeString('sv-SE', {hour: '2-digit', minute:'2-digit'});
     
@@ -87,11 +77,8 @@ function renderArticle(item, sourceTitle, targetId) {
         <div class="source">${timeString} | ${sourceTitle || "Nyhetskälla"}</div>
     `;
     
-    // Lägg till högst upp
     container.prepend(div);
 }
 
-// Starta hämtningen och schemalägg uppdateringar
 fetchFeeds();
-// Uppdaterar flödena var 3:e minut (180 000 millisekunder)
 setInterval(fetchFeeds, 180000);
