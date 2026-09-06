@@ -8,40 +8,71 @@
     <link rel="stylesheet" href="style.css">
 
     <link rel="stylesheet"
-          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
+
 <body>
 
 <div class="dashboard-container">
 
     <section id="map-section" class="panel">
-        <h2>Östersjön: MarineTraffic Live</h2>
 
-        <div id="map-container">
-            <iframe
-                id="marinetraffic"
-                name="marinetraffic"
-                src="https://www.marinetraffic.com/en/ais/embed/mapv2/?zoom=5&lat=57.5&lon=19.5&maptype=4&shownames=false&mmsi=0&fleet=0&shiptype=0"
-                width="100%"
-                height="100%"
-                scrolling="no">
-            </iframe>
-        </div>
+        <h2>Östersjön - OpenSeaMap</h2>
+
+        <div id="overview-map"></div>
+
     </section>
 
     <section id="cables-section" class="panel">
-        <h2>Högspänningskablar (Östersjön)</h2>
+
+        <h2>Högspänningskablar i Östersjön</h2>
+
         <div id="cable-map"></div>
+
     </section>
 
     <section id="osint-section" class="panel">
-        <h2>Säkerhet & OSINT (Östersjön / Europa)</h2>
-        <div id="osint-feed" class="feed-container"></div>
+
+        <h2>OSINT & Säkerhetsflöde</h2>
+
+        <div id="live-clock"></div>
+
+        <div id="last-update"></div>
+
+        <div class="tabs">
+
+            <button class="tab-button active"
+                onclick="showTab('today')">
+                Idag
+            </button>
+
+            <button class="tab-button"
+                onclick="showTab('yesterday')">
+                Igår
+            </button>
+
+            <button class="tab-button"
+                onclick="showTab('older')">
+                Äldre
+            </button>
+
+        </div>
+
+        <div id="today-feed"
+             class="feed-container"></div>
+
+        <div id="yesterday-feed"
+             class="feed-container hidden"></div>
+
+        <div id="older-feed"
+             class="feed-container hidden"></div>
+
     </section>
 
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script src="script.js"></script>
 
 </body>
