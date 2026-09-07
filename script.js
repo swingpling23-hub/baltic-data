@@ -523,15 +523,6 @@ const securityKeywords = [
     // =========================
     // ORGANISATIONER
     // =========================
-
-    'european union',
-    'eu',
-
-    'frontex',
-
-    'saceur',
-
-    'shape'
 'european union',
 'eu',
 
