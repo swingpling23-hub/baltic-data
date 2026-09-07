@@ -119,6 +119,7 @@ h2 {
 .news-item {
     padding: 12px;
     border-bottom: 1px solid #333;
+    transition: 0.2s ease;
 }
 
 .news-item a {
@@ -137,6 +138,10 @@ h2 {
     color: #888;
     margin-top: 4px;
 }
+
+/* =========================
+   NY ARTIKEL
+   ========================= */
 
 @keyframes flashAlert {
 
@@ -157,25 +162,80 @@ h2 {
     animation: flashAlert 4s ease;
     border-left: 4px solid #ff4444;
 }
-.news-item.priority-one {
 
-    background-color:
-        rgba(
-            255,
-            0,
-            0,
-            0.18
-        );
+/* =========================
+   KRITISKA HÄNDELSER
+   ========================= */
 
-    border-left:
-        6px solid #ff0000;
+.priority-critical {
 
-    box-shadow:
-        inset 0 0 15px
-        rgba(
-            255,
-            0,
-            0,
-            0.35
-        );
+    border-left: 6px solid #ff0000;
+
+    background: rgba(
+        255,
+        0,
+        0,
+        0.15
+    );
+
+    animation: pulse-red 1.5s infinite;
+
+}
+
+/* =========================
+   VARNING
+   ========================= */
+
+.priority-warning {
+
+    border-left: 6px solid #ff9900;
+
+    background: rgba(
+        255,
+        165,
+        0,
+        0.15
+    );
+
+}
+
+/* =========================
+   KRITISK PULS
+   ========================= */
+
+@keyframes pulse-red {
+
+    0% {
+        box-shadow: 0 0 3px red;
+    }
+
+    50% {
+        box-shadow: 0 0 12px red;
+    }
+
+    100% {
+        box-shadow: 0 0 3px red;
+    }
+
+}
+
+/* =========================
+   SCROLLBAR
+   ========================= */
+
+.feed-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.feed-container::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+.feed-container::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 4px;
+}
+
+.feed-container::-webkit-scrollbar-thumb:hover {
+    background: #666;
 }
