@@ -5,161 +5,391 @@
 }
 
 body {
+
     background-color: #121212;
+
     color: #e0e0e0;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+    font-family:
+        "Segoe UI",
+        Tahoma,
+        Geneva,
+        Verdana,
+        sans-serif;
+
     height: 100vh;
+
     overflow: hidden;
+
 }
 
 .dashboard-container {
+
     display: grid;
+
     grid-template-columns: 1fr 2fr;
+
     grid-template-rows: 1fr 1fr;
+
     height: 100vh;
+
     gap: 10px;
+
     padding: 10px;
+
 }
 
 .panel {
+
     background: #1e1e1e;
+
     border: 1px solid #333;
+
     border-radius: 8px;
+
     display: flex;
+
     flex-direction: column;
+
     padding: 15px;
+
     min-height: 0;
+
 }
 
 h2 {
+
     font-size: 1.1rem;
+
     margin-bottom: 8px;
+
     color: #4da6ff;
+
     border-bottom: 1px solid #333;
+
     padding-bottom: 5px;
+
 }
 
+h3 {
+
+    color: #ffffff;
+
+    font-size: 0.95rem;
+
+    margin-bottom: 6px;
+
+}
+
+/* ========================= */
+/* PANELER */
+/* ========================= */
+
 #map-section {
+
     grid-column: 1;
+
     grid-row: 1;
+
 }
 
 #cables-section {
+
     grid-column: 1;
+
     grid-row: 2;
+
 }
 
 #osint-section {
+
     grid-column: 2;
+
     grid-row: 1 / span 2;
+
 }
+
+/* ========================= */
+/* KARTOR */
+/* ========================= */
 
 #overview-map,
 #cable-map {
+
     flex-grow: 1;
+
     min-height: 300px;
+
     border-radius: 6px;
+
     overflow: hidden;
+
     background-color: #0a0a0a;
+
 }
 
+/* ========================= */
+/* STATUS */
+/* ========================= */
+
 #live-clock {
+
     text-align: right;
+
     color: #00ff88;
+
     font-size: 1.2rem;
+
     font-weight: bold;
+
 }
 
 #last-update {
+
     text-align: right;
+
     color: #4da6ff;
+
     font-size: 0.85rem;
+
 }
 
 #next-update {
+
     text-align: right;
+
     color: #ffaa00;
+
     font-size: 0.85rem;
+
     margin-bottom: 10px;
+
 }
 
-.tabs {
-    display: flex;
-    gap: 5px;
+/* ========================= */
+/* STATISTIK */
+/* ========================= */
+
+#stats-box {
+
+    background: #16232e;
+
+    border: 1px solid #27465f;
+
+    border-radius: 6px;
+
+    padding: 10px;
+
     margin-bottom: 10px;
+
+}
+
+#stats-content {
+
+    font-size: 0.85rem;
+
+    line-height: 1.6rem;
+
+}
+
+#stats-content hr {
+
+    border: none;
+
+    border-top: 1px solid #3c546a;
+
+    margin: 6px 0;
+
+}
+
+/* ========================= */
+/* VMA */
+/* ========================= */
+
+#vma-box {
+
+    background: rgba(120, 0, 0, 0.28);
+
+    border: 1px solid #ff4b4b;
+
+    border-radius: 6px;
+
+    padding: 10px;
+
+    margin-bottom: 10px;
+
+}
+
+#vma-feed {
+
+    max-height: 170px;
+
+    overflow-y: auto;
+
+    font-size: 0.85rem;
+
+}
+
+.vma-item {
+
+    padding: 8px;
+
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+
+}
+
+.vma-location {
+
+    color: #ffb4b4;
+
+}
+
+.vma-time {
+
+    color: #cccccc;
+
+    font-size: 0.75rem;
+
+}
+
+/* ========================= */
+/* FLIKAR */
+/* ========================= */
+
+.tabs {
+
+    display: flex;
+
+    gap: 5px;
+
+    margin-bottom: 10px;
+
 }
 
 .tab-button {
+
     flex: 1;
+
     background: #222;
+
     color: white;
+
     border: none;
+
     padding: 10px;
+
     border-radius: 4px;
+
     cursor: pointer;
+
 }
 
 .tab-button:hover {
+
     background: #333;
+
 }
 
 .tab-button.active {
+
     background: #4da6ff;
+
 }
 
+/* ========================= */
+/* FEEDS */
+/* ========================= */
+
 .feed-container {
+
     flex-grow: 1;
+
     overflow-y: auto;
+
 }
 
 .hidden {
+
     display: none;
+
 }
 
+/* ========================= */
+/* NYHETER */
+/* ========================= */
+
 .news-item {
+
     padding: 12px;
+
     border-bottom: 1px solid #333;
+
+    transition: 0.2s ease;
+
+}
+
+.news-item:hover {
+
+    background: rgba(255,255,255,0.03);
+
 }
 
 .news-item a {
-    color: #fff;
+
+    color: #ffffff;
+
     text-decoration: none;
+
     font-weight: bold;
+
     display: block;
+
 }
 
 .news-item a:hover {
+
     color: #4da6ff;
+
 }
 
 .source {
+
     font-size: 0.8rem;
-    color: #888;
+
+    color: #999;
+
     margin-top: 4px;
+
 }
 
-@keyframes flashAlert {
+.article-meta {
 
-    0% {
-        background-color: rgba(255, 0, 0, 0.8);
-    }
+    font-size: 0.75rem;
 
-    50% {
-        background-color: rgba(255, 0, 0, 0.2);
-    }
+    color: #8b8b8b;
 
-    100% {
-        background-color: transparent;
-    }
+    margin-top: 5px;
+
 }
 
-.news-item.new-flash {
-    animation: flashAlert 4s ease;
-    border-left: 4px solid #ff4444;
+.article-keyword {
+
+    color: #64d4ff;
+
+    font-size: 0.75rem;
+
+    margin-top: 4px;
+
 }
+
+/* ========================= */
+/* PRIORITET 1 */
+/* ========================= */
+
 .news-item.priority-one {
 
     background-color:
+
         rgba(
             255,
             0,
@@ -178,4 +408,110 @@ h2 {
             0,
             0.35
         );
+
+}
+
+/* ========================= */
+/* NY ARTIKEL */
+/* ========================= */
+
+@keyframes flashAlert {
+
+    0% {
+
+        background-color:
+            rgba(
+                255,
+                0,
+                0,
+                0.8
+            );
+
+    }
+
+    50% {
+
+        background-color:
+            rgba(
+                255,
+                0,
+                0,
+                0.2
+            );
+
+    }
+
+    100% {
+
+        background-color:
+            transparent;
+
+    }
+
+}
+
+.news-item.new-flash {
+
+    animation:
+        flashAlert
+        4s
+        ease;
+
+}
+
+/* ========================= */
+/* INCIDENTMARKÖRER */
+/* ========================= */
+
+.incident-marker {
+
+    width: 14px;
+
+    height: 14px;
+
+    border-radius: 50%;
+
+    background: red;
+
+    border: 2px solid white;
+
+    box-shadow:
+        0 0 10px red;
+
+}
+
+.priority-marker {
+
+    animation:
+        pulseAlert
+        1.5s infinite;
+
+}
+
+@keyframes pulseAlert {
+
+    0% {
+
+        transform: scale(1);
+
+        opacity: 1;
+
+    }
+
+    50% {
+
+        transform: scale(1.4);
+
+        opacity: 0.6;
+
+    }
+
+    100% {
+
+        transform: scale(1);
+
+        opacity: 1;
+
+    }
+
 }
