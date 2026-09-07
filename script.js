@@ -594,6 +594,35 @@ const securityKeywords = [
 
     'samhällsstörning'
 
+    'vma',
+
+    'viktigt meddelande till allmänheten',
+
+    'gasläcka',
+
+    'kemikalieutsläpp',
+
+    'storbrand',
+
+    'skogsbrand',
+
+    'explosion',
+
+    'evakuering',
+
+    'sabotage',
+
+    'hybrid attack',
+
+    'cable damage',
+
+    'cable cut',
+
+    'gps jamming',
+
+    'critical infrastructure'
+];
+
 ];
 
 
