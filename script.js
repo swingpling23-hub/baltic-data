@@ -541,6 +541,59 @@ const securityKeywords = [
     'saceur',
 
     'shape'
+        // =========================
+    // VMA & KRISINFORMATION
+    // =========================
+
+    'vma',
+    'viktigt meddelande till allmänheten',
+
+    'krisinformation',
+
+    'räddningstjänst',
+
+    'evakuering',
+    'evacuate',
+
+    'utrymning',
+
+    'gasläcka',
+    'gas leak',
+
+    'kemikalieutsläpp',
+    'chemical spill',
+
+    'giftig rök',
+    'toxic smoke',
+
+    'storbrand',
+    'major fire',
+
+    'skogsbrand',
+    'wildfire',
+
+    'explosion',
+
+    'dricksvatten',
+
+    'vattenförorening',
+
+    'utsläpp',
+
+    'olycka',
+
+    'industriolycka',
+
+    'järnvägsolycka',
+
+    'civilförsvar',
+
+    'beredskap',
+
+    'krisberedskap',
+
+    'samhällsstörning'
+
 ];
 
 
