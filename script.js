@@ -684,7 +684,7 @@ nextRefresh--;
 
 if (nextRefresh < 0) {
 
-nextRefresh = 60;
+nextRefresh = 120;
 
 }
 
@@ -945,6 +945,6 @@ setInterval(() => {
 
 fetchFeeds();
 
-nextRefresh = 60;
+nextRefresh = 120;
 
 }, 120000);
