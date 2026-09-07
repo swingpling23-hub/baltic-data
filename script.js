@@ -947,4 +947,4 @@ fetchFeeds();
 
 nextRefresh = 60;
 
-}, 60000);
+}, 120000);
