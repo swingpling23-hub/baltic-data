@@ -1,32 +1,21 @@
 <!DOCTYPE html>
-
 <html lang="sv">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baltic OSINT Dashboard</title>
 
-    <link rel="stylesheet"
-          href="style.css">
+    <link rel="stylesheet" href="style.css">
 
     <link rel="stylesheet"
-          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 
 <body>
 
 <div class="dashboard-container">
 
-    <!-- VÄNSTER KOLUMM -->
-
-    <section id="map-section"
-             class="panel">
+    <section id="map-section" class="panel">
 
         <h2>Östersjön - OpenSeaMap</h2>
 
@@ -34,8 +23,7 @@
 
     </section>
 
-    <section id="cables-section"
-             class="panel">
+    <section id="cables-section" class="panel">
 
         <h2>Högspänningskablar i Östersjön</h2>
 
@@ -43,14 +31,9 @@
 
     </section>
 
-    <!-- HÖGER KOLUMM -->
-
-    <section id="osint-section"
-             class="panel">
+    <section id="osint-section" class="panel">
 
         <h2>OSINT & Säkerhetsflöde</h2>
-
-        <!-- STATUSRAD -->
 
         <div id="live-clock"></div>
 
@@ -58,84 +41,40 @@
 
         <div id="next-update"></div>
 
-        <!-- STATISTIK -->
-
-        <div id="stats-box">
-
-            <h3>OSINT Status</h3>
-
-            <div id="stats-content">
-
-                Militärt: 0<br>
-                Infrastruktur: 0<br>
-                Cyber: 0<br>
-                VMA: 0<br>
-
-                <hr>
-
-                Totalt idag: 0
-
-            </div>
-
-        </div>
-
-        <!-- VMA -->
-
-        <div id="vma-box">
-
-            <h3>VMA & Krisinformation</h3>
-
-            <div id="vma-feed">
-
-                Inga aktiva VMA.
-
-            </div>
-
-        </div>
-
-        <!-- FLIKAR -->
-
         <div class="tabs">
 
             <button class="tab-button active"
-                    onclick="showTab('today')">
+                onclick="showTab('today')">
                 Idag
             </button>
 
             <button class="tab-button"
-                    onclick="showTab('yesterday')">
+                onclick="showTab('yesterday')">
                 Igår
             </button>
 
             <button class="tab-button"
-                    onclick="showTab('older')">
+                onclick="showTab('older')">
                 Äldre
             </button>
 
         </div>
 
-        <!-- NYHETER -->
-
         <div id="today-feed"
-             class="feed-container">
-        </div>
+             class="feed-container"></div>
 
         <div id="yesterday-feed"
-             class="feed-container hidden">
-        </div>
+             class="feed-container hidden"></div>
 
         <div id="older-feed"
-             class="feed-container hidden">
-        </div>
+             class="feed-container hidden"></div>
 
     </section>
 
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <script src="script.js"></script>
 
 </body>
-
 </html>
