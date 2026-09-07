@@ -109,9 +109,17 @@ const feeds = [
 
 'https://rss.dw.com/xml/rss-en-eu',
 
-'https://www.navalnews.com/feed/'
+'https://www.navalnews.com/feed/',
 
+// KRIS & SAMHÄLLE
+
+'https://www.krisinformation.se/RSS',
+
+'https://polisen.se/Aktuellt/rss/',
+
+'https://www.forsvarsmakten.se/sv/aktuellt/rss/'
 ];
+
 
 // ======================================
 // NYCKELORD
