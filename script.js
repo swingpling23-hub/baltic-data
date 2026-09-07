@@ -532,8 +532,51 @@ const securityKeywords = [
     'saceur',
 
     'shape'
-];
+'european union',
+'eu',
 
+'frontex',
+
+'saceur',
+
+'shape',
+
+// =========================
+// ELNÄT & KRITISK INFRASTRUKTUR
+// =========================
+
+'power grid',
+'electricity grid',
+
+'energy grid',
+
+'power infrastructure',
+
+'substation',
+'transformer station',
+'transformer substation',
+
+'power station',
+
+'high-voltage line',
+'high voltage line',
+
+'high-voltage power line',
+'high voltage power line',
+
+'transmission line',
+
+'transmission network',
+
+'grid sabotage',
+
+'explosive device',
+'explosive devices',
+
+'power sabotage',
+
+'electrical infrastructure'
+];
 
 // ======================================
 // LIVE-KLOCKA
