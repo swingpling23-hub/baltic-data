@@ -1,4 +1,3 @@
-// ======================================
 // OPENSEAMAP + ÖSTERSJÖKARTA
 // ======================================
 
@@ -109,17 +108,9 @@ const feeds = [
 
 'https://rss.dw.com/xml/rss-en-eu',
 
-'https://www.navalnews.com/feed/',
+'https://www.navalnews.com/feed/'
 
-// KRIS & SAMHÄLLE
-
-'https://www.krisinformation.se/RSS',
-
-'https://polisen.se/Aktuellt/rss/',
-
-'https://www.forsvarsmakten.se/sv/aktuellt/rss/'
 ];
-
 
 // ======================================
 // NYCKELORD
@@ -541,88 +532,6 @@ const securityKeywords = [
     'saceur',
 
     'shape'
-        // =========================
-    // VMA & KRISINFORMATION
-    // =========================
-
-    'vma',
-    'viktigt meddelande till allmänheten',
-
-    'krisinformation',
-
-    'räddningstjänst',
-
-    'evakuering',
-    'evacuate',
-
-    'utrymning',
-
-    'gasläcka',
-    'gas leak',
-
-    'kemikalieutsläpp',
-    'chemical spill',
-
-    'giftig rök',
-    'toxic smoke',
-
-    'storbrand',
-    'major fire',
-
-    'skogsbrand',
-    'wildfire',
-
-    'explosion',
-
-    'dricksvatten',
-
-    'vattenförorening',
-
-    'utsläpp',
-
-    'olycka',
-
-    'industriolycka',
-
-    'järnvägsolycka',
-
-    'civilförsvar',
-
-    'beredskap',
-
-    'krisberedskap',
-
-    'samhällsstörning'
-
-    'vma',
-
-    'viktigt meddelande till allmänheten',
-
-    'gasläcka',
-
-    'kemikalieutsläpp',
-
-    'storbrand',
-
-    'skogsbrand',
-
-    'explosion',
-
-    'evakuering',
-
-    'sabotage',
-
-    'hybrid attack',
-
-    'cable damage',
-
-    'cable cut',
-
-    'gps jamming',
-
-    'critical infrastructure'
-];
-
 ];
 
 
