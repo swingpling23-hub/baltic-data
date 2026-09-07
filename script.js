@@ -119,184 +119,422 @@ const feeds = [
 
 const securityKeywords = [
 
-// Kablar & energi
+    // =========================
+    // KABLAR & INFRASTRUKTUR
+    // =========================
 
-'nordbalt',
-'estlink',
-'estlink 1',
-'estlink 2',
-'swepol',
-'swepol link',
-'baltic cable',
+    'nordbalt',
+    'estlink',
+    'estlink 1',
+    'estlink 2',
+    'swepol',
+    'swepol link',
+    'baltic cable',
 
-'undersea cable',
-'subsea cable',
-'power cable',
-'electric cable',
+    'undersea cable',
+    'subsea cable',
+    'power cable',
+    'electric cable',
 
-'cable damage',
-'cable break',
-'cable cut',
-'cable fault',
+    'fiber cable',
+    'fibre cable',
+    'fiber optic cable',
+    'telecommunications cable',
+    'data cable',
+    'internet cable',
 
-'critical infrastructure',
-'energy infrastructure',
+    'cable damage',
+    'cable break',
+    'cable cut',
+    'cable fault',
 
-'pipeline',
-'offshore infrastructure',
+    'critical infrastructure',
+    'energy infrastructure',
+    'offshore infrastructure',
+    'underwater infrastructure',
+    'undersea infrastructure',
+    'marine infrastructure',
+    'seabed infrastructure',
 
-'nord stream',
+    'pipeline',
+    'gas pipeline',
+    'oil pipeline',
 
-'anchor dragging',
-'ship anchor',
+    'nord stream',
 
-'shadow fleet',
+    'anchor dragging',
+    'ship anchor',
 
-// Säkerhet
+    'shadow fleet',
 
-'sabotage',
+    'seabed survey',
+    'bathymetric survey',
 
-'terror',
-'terrorism',
-'terrorist',
+    // =========================
+    // SABOTAGE & HYBRIDKRIG
+    // =========================
 
-'espionage',
-'spy',
-'spying',
+    'sabotage',
 
-'critical incident',
+    'hybrid warfare',
+    'hybrid threat',
+    'hybrid attack',
+    'hybrid operation',
+    'hybrid activity',
 
-// Cyber
+    'grey zone',
+    'gray zone',
 
-'hack',
-'hacker',
-'hacking',
+    'foreign interference',
+    'foreign influence',
 
-'cyber',
-'cyberattack',
-'cyber security',
-'cybersecurity',
+    'covert operation',
+    'covert activity',
 
-'ransomware',
+    'information warfare',
 
-// Drönare
+    'disinformation',
+    'misinformation',
 
-'drone',
-'drones',
-'uav',
+    'critical incident',
 
-// Explosivt
+    // =========================
+    // SPIONAGE
+    // =========================
 
-'explosive',
-'explosives',
-'bomb',
-'blast',
+    'espionage',
+    'spy',
+    'spying',
 
-// Militärt
+    'intelligence operation',
+    'surveillance',
+    'reconnaissance',
 
-'military',
-'defense',
-'defence',
+    'state-sponsored',
 
-'army',
-'navy',
-'air force',
+    // =========================
+    // CYBER
+    // =========================
 
-'warship',
-'frigate',
-'destroyer',
-'corvette',
+    'hack',
+    'hacker',
+    'hacking',
 
-'fighter',
-'fighter jet',
-'warplane',
+    'cyber',
+    'cyberattack',
+    'cyber security',
+    'cybersecurity',
 
-'reconnaissance',
-'surveillance',
+    'cyber espionage',
 
-'missile',
-'missiles',
+    'ransomware',
 
-'exercise',
-'military exercise',
+    'malware',
 
-'naval exercise',
+    'data breach',
 
-'awacs',
+    'network intrusion',
 
-'submarine',
-'submarines',
+    'ddos',
 
-'electronic warfare',
+    'industrial control system',
 
-'hybrid warfare',
+    'scada',
 
-'air policing',
+    'threat actor',
 
-'maritime security',
+    'critical systems',
 
-'coast guard',
+    // =========================
+    // DRÖNARE
+    // =========================
 
-'special forces',
+    'drone',
+    'drones',
 
-'baltops',
+    'uav',
+    'uas',
 
-'nato',
+    'naval drone',
+    'sea drone',
 
-// Geografi
+    'underwater drone',
 
-'baltic',
-'baltic sea',
-'östersjön',
+    'unmanned vessel',
+    'autonomous vessel',
 
-'gotland',
-'bornholm',
-'kaliningrad',
+    'usv',
+    'uuv',
 
-'sweden',
-'swedish',
+    'loitering munition',
 
-'finland',
-'finnish',
+    // =========================
+    // EXPLOSIVA HÄNDELSER
+    // =========================
 
-'estonia',
-'estonian',
+    'explosive',
+    'explosives',
 
-'latvia',
-'latvian',
+    'bomb',
 
-'lithuania',
-'lithuanian',
+    'blast',
 
-'poland',
-'polish',
+    'terror',
+    'terrorism',
+    'terrorist',
 
-'denmark',
-'danish',
+    // =========================
+    // MILITÄRT
+    // =========================
 
-'germany',
-'german',
+    'military',
+    'defense',
+    'defence',
 
-// Ryssland/Ukraina
+    'army',
+    'navy',
+    'air force',
 
-'russia',
-'russian',
+    'warship',
 
-'ukraine',
-'ukrainian',
+    'frigate',
+    'destroyer',
+    'corvette',
 
-'moscow',
+    'submarine',
+    'submarines',
 
-'putin',
-'kremlin',
+    'fighter',
+    'fighter jet',
+    'warplane',
 
-// USA/Kina
+    'bomber',
+    'strategic bomber',
 
-'trump',
+    'tu-95',
+    'tu-160',
 
-'china',
-'chinese'
+    'il-20',
+
+    'su-27',
+    'su-35',
+
+    'f-35',
+    'gripen',
+    'jas 39',
+
+    'awacs',
+
+    'electronic warfare',
+
+    'special forces',
+
+    'missile',
+    'missiles',
+
+    'strike group',
+
+    'fleet',
+    'task force',
+
+    'amphibious',
+
+    'landing ship',
+
+    'minehunter',
+    'minesweeper',
+
+    'missile boat',
+
+    'patrol ship',
+    'patrol vessel',
+
+    // =========================
+    // ÖVNINGAR
+    // =========================
+
+    'exercise',
+    'military exercise',
+    'naval exercise',
+
+    'air policing',
+
+    'baltops',
+
+    'joint expeditionary force',
+    'jef',
+
+    'nato',
+    'nato summit',
+
+    'maritime security',
+
+    'coast guard',
+
+    // =========================
+    // MARITIM SÄKERHET
+    // =========================
+
+    'maritime surveillance',
+
+    'vessel tracking',
+
+    'ais spoofing',
+
+    'gps jamming',
+    'gps interference',
+
+    'signal disruption',
+
+    'border security',
+
+    'exclusion zone',
+
+    // =========================
+    // HANDELSFARTYG
+    // =========================
+
+    'merchant ship',
+
+    'commercial shipping',
+
+    'cargo vessel',
+
+    'container vessel',
+
+    'bulk carrier',
+
+    'tanker',
+    'oil tanker',
+
+    'lng carrier',
+
+    // =========================
+    // GEOGRAFI
+    // =========================
+
+    'baltic',
+    'baltic sea',
+    'östersjön',
+
+    'gulf of finland',
+    'gulf of bothnia',
+    'bothnian sea',
+
+    'archipelago sea',
+
+    'kattegat',
+    'skagerrak',
+
+    'öresund',
+
+    'aland',
+    'åland',
+
+    'gotland',
+    'gotland island',
+
+    'visby',
+
+    'bornholm',
+
+    'kaliningrad',
+
+    'tallinn',
+    'helsinki',
+    'helsingfors',
+
+    'klaipeda',
+    'gdynia',
+    'karlskrona',
+
+    // =========================
+    // LÄNDER
+    // =========================
+
+    'sweden',
+    'swedish',
+
+    'finland',
+    'finnish',
+
+    'estonia',
+    'estonian',
+
+    'latvia',
+    'latvian',
+
+    'lithuania',
+    'lithuanian',
+
+    'poland',
+    'polish',
+
+    'denmark',
+    'danish',
+
+    'germany',
+    'german',
+
+    'norway',
+    'norwegian',
+
+    'belarus',
+    'belarusian',
+
+    'united kingdom',
+    'britain',
+    'british',
+
+    'france',
+    'french',
+
+    // =========================
+    // RYSSLAND / UKRAINA
+    // =========================
+
+    'russia',
+    'russian',
+
+    'ukraine',
+    'ukrainian',
+
+    'moscow',
+
+    'kremlin',
+
+    'putin',
+
+    // =========================
+    // KINA
+    // =========================
+
+    'china',
+    'chinese',
+
+    // =========================
+    // USA
+    // =========================
+
+    'united states',
+    'usa',
+
+    'trump',
+
+    // =========================
+    // ORGANISATIONER
+    // =========================
+
+    'european union',
+    'eu',
+
+    'frontex',
+
+    'saceur',
+
+    'shape'
 ];
+
 
 // ======================================
 // LIVE-KLOCKA
