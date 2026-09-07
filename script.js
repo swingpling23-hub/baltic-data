@@ -175,6 +175,32 @@ const feeds = [
 ];
 
 // ======================================
+// PRIORITERING
+// ======================================
+
+const criticalKeywords = [
+    'cable cut',
+    'cable damage',
+    'estlink',
+    'nordbalt',
+    'sabotage',
+    'hybrid attack',
+    'shadow fleet',
+    'explosive device',
+    'nord stream'
+];
+
+const warningKeywords = [
+    'submarine',
+    'warship',
+    'missile',
+    'gps jamming',
+    'electronic warfare',
+    'drone',
+    'ais spoofing'
+];
+
+// ======================================
 // NYCKELORD
 // ======================================
 
@@ -664,7 +690,7 @@ updateClock,
 // NÄSTA RSS-SÖKNING
 // ======================================
 
-let nextRefresh = 60;
+let nextRefresh = 120;
 
 function updateRefreshCounter() {
 
@@ -876,13 +902,49 @@ document.createElement(
 div.className =
 'news-item';
 
-if (isNew) {
+const articleText =
+(
+item.title +
+' ' +
+(item.description || '')
+)
+.toLowerCase();
 
-div.classList.add(
-'new-flash'
+const isCritical =
+criticalKeywords.some(
+keyword =>
+articleText.includes(keyword)
 );
 
+const isWarning =
+warningKeywords.some(
+keyword =>
+articleText.includes(keyword)
+);
+
+if (isCritical) {
+
+    div.classList.add(
+    'priority-critical'
+    );
+
 }
+else if (isWarning) {
+
+    div.classList.add(
+    'priority-warning'
+    );
+
+}
+
+if (isNew) {
+
+    div.classList.add(
+    'new-flash'
+    );
+
+}
+
 
 const articleLink =
 document.createElement(
