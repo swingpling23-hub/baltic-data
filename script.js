@@ -99,17 +99,79 @@ const proxyUrl =
 'https://api.rss2json.com/v1/api.json?rss_url=';
 
 const feeds = [
+    // =========================
+    // BEFINTLIGA
+    // =========================
 
-'https://feeds.bbci.co.uk/news/world/europe/rss.xml',
+    'https://feeds.bbci.co.uk/news/world/europe/rss.xml',
+    'https://www.svt.se/nyheter/rss.xml',
+    'https://feeds.expressen.se/nyheter/',
+    'https://rss.dw.com/rdf/rss-en-eu',
+    'https://www.navalnews.com/feed/',
 
-'https://www.svt.se/nyheter/rss.xml',
+    // =========================
+    // TYSKLAND
+    // =========================
 
-'https://feeds.expressen.se/nyheter/',
+    'https://rss.dw.com/rdf/rss-en-ger',
+    'https://rss.dw.com/rdf/rss-en-world',
 
-'https://rss.dw.com/xml/rss-en-eu',
+    // =========================
+    // FINLAND
+    // =========================
 
-'https://www.navalnews.com/feed/'
+    'https://yle.fi/rss/uutiset/tuoreimmat',
+    'https://svenska.yle.fi/rss/senaste-nytt',
 
+    // =========================
+    // POLEN
+    // =========================
+
+    'https://www.rp.pl/rss/7061-rzeczpospolita',
+    'https://tvn24.pl/najnowsze.xml',
+
+    // =========================
+    // ESTLAND
+    // =========================
+
+    'https://news.err.ee/rss',
+    'https://www.postimees.ee/rss',
+
+    // =========================
+    // LETTLAND
+    // =========================
+
+    'https://eng.lsm.lv/rss/',
+    'https://www.delfi.lv/rss/',
+
+    // =========================
+    // LITAUEN
+    // =========================
+
+    'https://www.lrt.lt/rss',
+    'https://www.delfi.lt/rss/',
+
+    // =========================
+    // NATO & FÖRSVAR
+    // =========================
+
+    'https://www.nato.int/rss/news.xml',
+    'https://breakingdefense.com/feed/',
+    'https://www.defensenews.com/arc/outboundfeeds/rss/',
+
+    // =========================
+    // ÖSTERSJÖ / SÄKERHET
+    // =========================
+
+    'https://www.maritime-executive.com/rss/all',
+    'https://gcaptain.com/feed/',
+    'https://www.hisutton.com/feed',
+
+    // =========================
+    // EUROPEISK PUBLIC SERVICE
+    // =========================
+
+    'https://feeds.bbci.co.uk/news/world/rss.xml'
 ];
 
 // ======================================
@@ -724,10 +786,13 @@ item,
 
 catch(error) {
 
-console.error(error);
+console.error(
+'Fel i RSS-flöde:',
+feed,
+error
+);
 
 }
-
 }
 
 const updateDiv =
