@@ -971,14 +971,63 @@ document.createElement(
 sourceDiv.className =
 'source';
 
-sourceDiv.textContent =
-articleDate.toLocaleTimeString(
-'sv-SE',
-{
-hour: '2-digit',
-minute: '2-digit'
-}
+const today =
+new Date();
+
+const yesterday =
+new Date();
+
+yesterday.setDate(
+today.getDate() - 1
 );
+
+if (
+articleDate.toDateString() ===
+today.toDateString()
+) {
+
+    sourceDiv.textContent =
+    'Idag ' +
+    articleDate.toLocaleTimeString(
+    'sv-SE',
+    {
+        hour: '2-digit',
+        minute: '2-digit'
+    }
+    );
+
+}
+else if (
+articleDate.toDateString() ===
+yesterday.toDateString()
+) {
+
+    sourceDiv.textContent =
+    'Igår ' +
+    articleDate.toLocaleTimeString(
+    'sv-SE',
+    {
+        hour: '2-digit',
+        minute: '2-digit'
+    }
+    );
+
+}
+else {
+
+    sourceDiv.textContent =
+    articleDate.toLocaleString(
+    'sv-SE',
+    {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+    }
+    );
+
+}
 
 div.appendChild(articleLink);
 div.appendChild(sourceDiv);
@@ -989,9 +1038,9 @@ while (
 container.children.length > 75
 ) {
 
-container.removeChild(
-container.lastChild
-);
+    container.removeChild(
+    container.lastChild
+    );
 
 }
 
