@@ -1146,7 +1146,7 @@ async function fetchVMA() {
         if (vmaItem) {
 
             showVMA(vmaItem);
-TEST VMA
+
         } else {
 
             clearVMA();
@@ -1172,7 +1172,7 @@ TEST VMA
 // START
 // ======================================
 fetchFeeds();
-//fetchVMA();
+fetchVMA();
 
 setInterval(() => {
 
