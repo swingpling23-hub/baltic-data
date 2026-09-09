@@ -656,6 +656,10 @@ const securityKeywords = [
 
 'electrical infrastructure'
 ];
+const searchKeywords =
+securityKeywords.map(
+keyword => keyword.toLowerCase()
+);
 
 // ======================================
 // LIVE-KLOCKA
@@ -785,12 +789,11 @@ item.title +
 .toLowerCase();
 
 const relevant =
-securityKeywords.some(
+searchKeywords.some(
 keyword =>
-content.includes(
-keyword.toLowerCase()
-)
+content.includes(keyword)
 );
+
 
 if (
 relevant &&
