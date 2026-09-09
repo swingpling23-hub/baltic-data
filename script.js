@@ -1172,7 +1172,7 @@ async function fetchVMA() {
 // START
 // ======================================
 fetchFeeds();
-fetchVMA();
+//fetchVMA();
 
 setInterval(() => {
 
