@@ -97,6 +97,8 @@ cableMap.invalidateSize();
 
 const proxyUrl =
 'https://api.rss2json.com/v1/api.json?rss_url=';
+const vmaFeed =
+'https://www.krisinformation.se/RSSPage/17974';
 
 const feeds = [
     // =========================
@@ -1046,6 +1048,123 @@ container.children.length > 75
     );
 
 }
+}
+    
+function showVMA(item) {
+
+    const banner =
+        document.getElementById(
+            'vma-banner'
+        );
+
+    const text =
+        document.getElementById(
+            'vma-text'
+        );
+
+    if (!banner || !text) return;
+
+    text.textContent =
+        item.title;
+
+    banner.classList.remove(
+        'hidden'
+    );
+
+    banner.classList.add(
+        'active'
+    );
+
+}
+
+function clearVMA() {
+
+    const banner =
+        document.getElementById(
+            'vma-banner'
+        );
+
+    if (!banner) return;
+
+    banner.classList.remove(
+        'active'
+    );
+
+    banner.classList.add(
+        'hidden'
+    );
+
+}
+
+
+async function fetchVMA() {
+
+    try {
+
+        const response =
+            await fetch(
+                proxyUrl +
+                encodeURIComponent(vmaFeed)
+            );
+
+        if (!response.ok) {
+
+            clearVMA();
+            return;
+
+        }
+
+        const data =
+            await response.json();
+
+        if (!data.items) {
+
+            clearVMA();
+            return;
+
+        }
+
+        const vmaItem =
+            data.items.find(item => {
+
+                const text =
+                    (
+                        item.title +
+                        ' ' +
+                        (item.description || '')
+                    ).toLowerCase();
+
+                return (
+                    text.includes('vma') ||
+                    text.includes(
+                        'viktigt meddelande till allmänheten'
+                    )
+                );
+
+            });
+
+        if (vmaItem) {
+
+            showVMA(vmaItem);
+
+        } else {
+
+            clearVMA();
+
+        }
+
+    }
+
+    catch(error) {
+
+        console.error(
+            'VMA-fel:',
+            error
+        );
+
+        clearVMA();
+
+    }
 
 }
 
@@ -1054,11 +1173,14 @@ container.children.length > 75
 // ======================================
 
 fetchFeeds();
+fetchVMA();
 
 setInterval(() => {
 
-fetchFeeds();
+    fetchFeeds();
+    fetchVMA();
 
-nextRefresh = 120;
+    nextRefresh = 120;
 
 }, 120000);
+
