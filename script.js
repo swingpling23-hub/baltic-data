@@ -1171,6 +1171,9 @@ async function fetchVMA() {
 // ======================================
 // START
 // ======================================
+showVMA({
+    title: 'TEST VMA - Detta är endast ett prov'
+});
 
 fetchFeeds();
 fetchVMA();
