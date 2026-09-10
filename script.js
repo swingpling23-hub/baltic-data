@@ -16,6 +16,8 @@ L.tileLayer(
 opacity: 0.9
 }
 ).addTo(overviewMap);
+const incidentLayer = L.layerGroup()
+.addTo(overviewMap);
 
 [
 [57.65, 18.30, 'Gotland'],
@@ -662,6 +664,87 @@ const searchKeywords =
 securityKeywords.map(
 keyword => keyword.toLowerCase()
 );
+const locationMap = {
+
+    gotland: [57.65, 18.30],
+    bornholm: [55.25, 14.90],
+    kaliningrad: [54.71, 20.50],
+
+    tallinn: [59.44, 24.75],
+    helsinki: [60.17, 24.94],
+    helsingfors: [60.17, 24.94],
+
+    klaipeda: [55.71, 21.13],
+    gdynia: [54.53, 18.55],
+    karlskrona: [56.16, 15.59],
+
+    stockholm: [59.33, 18.07],
+
+    åland: [60.15, 20.00],
+    aland: [60.15, 20.00],
+
+    baltic sea: [58.50, 18.50],
+    östersjön: [58.50, 18.50],
+
+    gulf of finland: [59.50, 25.50],
+
+    estlink: [59.40, 24.90],
+    estlink 1: [59.40, 24.90],
+    estlink 2: [59.40, 24.90],
+
+    nordbalt: [55.60, 20.40],
+
+    swepol: [55.30, 15.90]
+};
+function findLocation(articleText) {
+
+    for (const place in locationMap) {
+
+        if (articleText.includes(place)) {
+
+            return {
+                name: place,
+                coords: locationMap[place]
+            };
+
+        }
+
+    }
+
+    return null;
+}
+function addIncidentToMap(
+    item,
+    priority,
+    location
+) {
+
+    const color =
+        priority === 'critical'
+        ? '#ff0000'
+        : '#ff9900';
+
+    L.circleMarker(
+        location.coords,
+        {
+            radius:
+                priority === 'critical'
+                ? 10
+                : 7,
+
+            color: color,
+            fillColor: color,
+            fillOpacity: 0.8,
+            weight: 2
+        }
+    )
+    .addTo(incidentLayer)
+    .bindPopup(`
+        <b>${item.title}</b><br>
+        ${location.name}
+    `);
+
+}
 
 // ======================================
 // LIVE-KLOCKA
@@ -915,6 +998,11 @@ item.title +
 )
 .toLowerCase();
 
+    const location =
+    findLocation(
+        articleText
+    );
+
 const isCritical =
 criticalKeywords.some(
 keyword =>
@@ -926,6 +1014,29 @@ warningKeywords.some(
 keyword =>
 articleText.includes(keyword)
 );
+if (location) {
+
+    if (isCritical) {
+
+        addIncidentToMap(
+            item,
+            'critical',
+            location
+        );
+
+    }
+
+    else if (isWarning) {
+
+        addIncidentToMap(
+            item,
+            'warning',
+            location
+        );
+
+    }
+
+}
 
 if (isCritical) {
 
