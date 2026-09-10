@@ -826,11 +826,10 @@ feed.classList.add('hidden');
 
 });
 
-document
-.getElementById(
-tabName + '-feed'
-)
-.classList.remove('hidden');
+const targetFeed = document.getElementById(tabName + '-feed');
+if (targetFeed) {
+    targetFeed.classList.remove('hidden');
+}
 
 }
 
@@ -981,6 +980,8 @@ document.getElementById(
 );
 
 }
+
+if (!container) return;
 
 const div =
 document.createElement(
@@ -1293,4 +1294,3 @@ setInterval(() => {
     nextRefresh = 120;
 
 }, 120000);
-
