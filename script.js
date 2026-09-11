@@ -1,180 +1,111 @@
+// ======================================
 // OPENSEAMAP + ÖSTERSJÖKARTA
 // ======================================
 
 const overviewMap = L.map('overview-map').setView([58.5, 18.5], 5);
 
 L.tileLayer(
-'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-{
-maxZoom: 19
-}
+    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+        maxZoom: 19
+    }
 ).addTo(overviewMap);
 
 L.tileLayer(
-'https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png',
-{
-opacity: 0.9
-}
+    'https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png',
+    {
+        opacity: 0.9
+    }
 ).addTo(overviewMap);
-const incidentLayer = L.layerGroup()
-.addTo(overviewMap);
+
+const incidentLayer = L.layerGroup().addTo(overviewMap);
 
 [
-[57.65, 18.30, 'Gotland'],
-[55.25, 14.90, 'Bornholm'],
-[54.71, 20.50, 'Kaliningrad'],
-[59.44, 24.75, 'Tallinn'],
-[60.17, 24.94, 'Helsingfors'],
-[55.71, 21.13, 'Klaipeda'],
-[54.53, 18.55, 'Gdynia'],
-[56.16, 15.59, 'Karlskrona']
+    [57.65, 18.30, 'Gotland'],
+    [55.25, 14.90, 'Bornholm'],
+    [54.71, 20.50, 'Kaliningrad'],
+    [59.44, 24.75, 'Tallinn'],
+    [60.17, 24.94, 'Helsingfors'],
+    [55.71, 21.13, 'Klaipeda'],
+    [54.53, 18.55, 'Gdynia'],
+    [56.16, 15.59, 'Karlskrona']
 ].forEach(place => {
-
-L.marker([place[0], place[1]])
-.addTo(overviewMap)
-.bindPopup(place[2]);
-
+    L.marker([place[0], place[1]])
+        .addTo(overviewMap)
+        .bindPopup(place[2]);
 });
 
 // ======================================
 // KABELKARTA
 // ======================================
 
-const cableMap = L.map('cable-map')
-.setView([58.0, 18.0], 5);
+const cableMap = L.map('cable-map').setView([58.0, 18.0], 5);
 
 L.tileLayer(
-'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-{
-maxZoom: 19
-}
+    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+        maxZoom: 19
+    }
 ).addTo(cableMap);
 
 fetch('baltic-power-cables.geojson')
-
-.then(response => response.json())
-
-.then(data => {
-
-L.geoJSON(data, {
-
-style: {
-color: '#00ffff',
-weight: 4,
-opacity: 0.9
-},
-
-onEachFeature: function(feature, layer) {
-layer.bindPopup(`
-    <b>${feature.properties.name}</b><br>
-    ${feature.properties.country}<br>
-    ${feature.properties.type}
-`);
-
-}
-
-}).addTo(cableMap);
-
-})
-
-.catch(error => {
-
-console.error(
-'GeoJSON kunde inte läsas:',
-error
-);
-
-});
+    .then(response => response.json())
+    .then(data => {
+        L.geoJSON(data, {
+            style: {
+                color: '#00ffff',
+                weight: 4,
+                opacity: 0.9
+            },
+            onEachFeature: function(feature, layer) {
+                layer.bindPopup(`
+                    <b>${feature.properties.name}</b><br>
+                    ${feature.properties.country}<br>
+                    ${feature.properties.type}
+                `);
+            }
+        }).addTo(cableMap);
+    })
+    .catch(error => {
+        console.error('GeoJSON kunde inte läsas:', error);
+    });
 
 setTimeout(() => {
-
-overviewMap.invalidateSize();
-cableMap.invalidateSize();
-
+    overviewMap.invalidateSize();
+    cableMap.invalidateSize();
 }, 500);
 
 // ======================================
 // RSS-KÄLLOR
 // ======================================
 
-const proxyUrl =
-'https://api.rss2json.com/v1/api.json?rss_url=';
-const vmaFeed =
-'https://www.krisinformation.se/RSSPage/17974';
+const proxyUrl = 'https://api.rss2json.com/v1/api.json?rss_url=';
+const vmaFeed = 'https://www.krisinformation.se/RSSPage/17974';
 
 const feeds = [
-    // =========================
-    // BEFINTLIGA
-    // =========================
-
     'https://feeds.bbci.co.uk/news/world/europe/rss.xml',
     'https://www.svt.se/nyheter/rss.xml',
     'https://feeds.expressen.se/nyheter/',
     'https://rss.dw.com/rdf/rss-en-eu',
     'https://www.navalnews.com/feed/',
-
-    // =========================
-    // TYSKLAND
-    // =========================
-
     'https://rss.dw.com/rdf/rss-en-ger',
     'https://rss.dw.com/rdf/rss-en-world',
-
-    // =========================
-    // FINLAND
-    // =========================
-
     'https://yle.fi/rss/uutiset/tuoreimmat',
     'https://svenska.yle.fi/rss/senaste-nytt',
-
-    // =========================
-    // POLEN
-    // =========================
-
     'https://www.rp.pl/rss/7061-rzeczpospolita',
     'https://tvn24.pl/najnowsze.xml',
-
-    // =========================
-    // ESTLAND
-    // =========================
-
     'https://news.err.ee/rss',
     'https://www.postimees.ee/rss',
-
-    // =========================
-    // LETTLAND
-    // =========================
-
     'https://eng.lsm.lv/rss/',
     'https://www.delfi.lv/rss/',
-
-    // =========================
-    // LITAUEN
-    // =========================
-
     'https://www.lrt.lt/rss',
     'https://www.delfi.lt/rss/',
-
-    // =========================
-    // NATO & FÖRSVAR
-    // =========================
-
     'https://www.nato.int/rss/news.xml',
     'https://breakingdefense.com/feed/',
     'https://www.defensenews.com/arc/outboundfeeds/rss/',
-
-    // =========================
-    // ÖSTERSJÖ / SÄKERHET
-    // =========================
-
     'https://www.maritime-executive.com/rss/all',
     'https://gcaptain.com/feed/',
     'https://www.hisutton.com/feed',
-
-    // =========================
-    // EUROPEISK PUBLIC SERVICE
-    // =========================
-
     'https://feeds.bbci.co.uk/news/world/rss.xml'
 ];
 
@@ -209,11 +140,6 @@ const warningKeywords = [
 // ======================================
 
 const securityKeywords = [
-
-    // =========================
-    // KABLAR & INFRASTRUKTUR
-    // =========================
-
     'nordbalt',
     'estlink',
     'estlink 1',
@@ -221,24 +147,20 @@ const securityKeywords = [
     'swepol',
     'swepol link',
     'baltic cable',
-
     'undersea cable',
     'subsea cable',
     'power cable',
     'electric cable',
-
     'fiber cable',
     'fibre cable',
     'fiber optic cable',
     'telecommunications cable',
     'data cable',
     'internet cable',
-
     'cable damage',
     'cable break',
     'cable cut',
     'cable fault',
-
     'critical infrastructure',
     'energy infrastructure',
     'offshore infrastructure',
@@ -246,492 +168,271 @@ const securityKeywords = [
     'undersea infrastructure',
     'marine infrastructure',
     'seabed infrastructure',
-
     'pipeline',
     'gas pipeline',
     'oil pipeline',
-
     'nord stream',
-
     'anchor dragging',
     'ship anchor',
-
     'shadow fleet',
-
     'seabed survey',
     'bathymetric survey',
-
-    // =========================
-    // SABOTAGE & HYBRIDKRIG
-    // =========================
-
     'sabotage',
-
     'hybrid warfare',
     'hybrid threat',
     'hybrid attack',
     'hybrid operation',
     'hybrid activity',
-
     'grey zone',
     'gray zone',
-
     'foreign interference',
     'foreign influence',
-
     'covert operation',
     'covert activity',
-
     'information warfare',
-
     'disinformation',
     'misinformation',
-
     'critical incident',
-
-    // =========================
-    // SPIONAGE
-    // =========================
-
     'espionage',
     'spy',
     'spying',
-
     'intelligence operation',
     'surveillance',
     'reconnaissance',
-
     'state-sponsored',
-
-    // =========================
-    // CYBER
-    // =========================
-
     'hack',
     'hacker',
     'hacking',
-
     'cyber',
     'cyberattack',
     'cyber security',
     'cybersecurity',
-
     'cyber espionage',
-
     'ransomware',
-
     'malware',
-
     'data breach',
-
     'network intrusion',
-
     'ddos',
-
     'industrial control system',
-
     'scada',
-
     'threat actor',
-
     'critical systems',
-
-    // =========================
-    // DRÖNARE
-    // =========================
-
     'drone',
     'drones',
-
     'uav',
     'uas',
-
     'naval drone',
     'sea drone',
-
     'underwater drone',
-
     'unmanned vessel',
     'autonomous vessel',
-
     'usv',
     'uuv',
-
     'loitering munition',
-
-    // =========================
-    // EXPLOSIVA HÄNDELSER
-    // =========================
-
     'explosive',
     'explosives',
-
     'bomb',
-
     'blast',
-
     'terror',
     'terrorism',
     'terrorist',
-
-    // =========================
-    // MILITÄRT
-    // =========================
-
     'military',
     'defense',
     'defence',
-
     'army',
     'navy',
     'air force',
-
     'warship',
-
     'frigate',
     'destroyer',
     'corvette',
-
     'submarine',
     'submarines',
-
     'fighter',
     'fighter jet',
     'warplane',
-
     'bomber',
     'strategic bomber',
-
     'tu-95',
     'tu-160',
-
     'il-20',
-
     'su-27',
     'su-35',
-
     'f-35',
     'gripen',
     'jas 39',
-
     'awacs',
-
     'electronic warfare',
-
     'special forces',
-
     'missile',
     'missiles',
-
     'strike group',
-
     'fleet',
     'task force',
-
     'amphibious',
-
     'landing ship',
-
     'minehunter',
     'minesweeper',
-
     'missile boat',
-
     'patrol ship',
     'patrol vessel',
-
-    // =========================
-    // ÖVNINGAR
-    // =========================
-
     'exercise',
     'military exercise',
     'naval exercise',
-
     'air policing',
-
     'baltops',
-
     'joint expeditionary force',
     'jef',
-
     'nato',
     'nato summit',
-
     'maritime security',
-
     'coast guard',
-
-    // =========================
-    // MARITIM SÄKERHET
-    // =========================
-
     'maritime surveillance',
-
     'vessel tracking',
-
     'ais spoofing',
-
     'gps jamming',
     'gps interference',
-
     'signal disruption',
-
     'border security',
-
     'exclusion zone',
-
-    // =========================
-    // HANDELSFARTYG
-    // =========================
-
     'merchant ship',
-
     'commercial shipping',
-
     'cargo vessel',
-
     'container vessel',
-
     'bulk carrier',
-
     'tanker',
     'oil tanker',
-
     'lng carrier',
-
-    // =========================
-    // GEOGRAFI
-    // =========================
-
     'baltic',
     'baltic sea',
     'östersjön',
-
     'gulf of finland',
     'gulf of bothnia',
     'bothnian sea',
-
     'archipelago sea',
-
     'kattegat',
     'skagerrak',
-
     'öresund',
-
     'aland',
     'åland',
-
     'gotland',
     'gotland island',
-
     'visby',
-
     'bornholm',
-
     'kaliningrad',
-
     'tallinn',
     'helsinki',
     'helsingfors',
-
     'klaipeda',
     'gdynia',
     'karlskrona',
-
-    // =========================
-    // LÄNDER
-    // =========================
-
     'sweden',
     'swedish',
-
     'finland',
     'finnish',
-
     'estonia',
     'estonian',
-
     'latvia',
     'latvian',
-
     'lithuania',
     'lithuanian',
-
     'poland',
     'polish',
-
     'denmark',
     'danish',
-
     'germany',
     'german',
-
     'norway',
     'norwegian',
-
     'belarus',
     'belarusian',
-
     'united kingdom',
     'britain',
     'british',
-
     'france',
     'french',
-
-    // =========================
-    // RYSSLAND / UKRAINA
-    // =========================
-
     'russia',
     'russian',
-
     'ukraine',
     'ukrainian',
-
     'moscow',
-
     'kremlin',
-
     'putin',
-
-    // =========================
-    // KINA
-    // =========================
-
     'china',
     'chinese',
-
-    // =========================
-    // USA
-    // =========================
-
     'united states',
     'usa',
-
     'trump',
-
-    // =========================
-    // ORGANISATIONER
-    // =========================
-'european union',
-'eu',
-
-'frontex',
-
-'saceur',
-
-'shape',
-
-// =========================
-// ELNÄT & KRITISK INFRASTRUKTUR
-// =========================
-
-'power grid',
-'electricity grid',
-
-'energy grid',
-
-'power infrastructure',
-
-'substation',
-'transformer station',
-'transformer substation',
-
-'power station',
-
-'high-voltage line',
-'high voltage line',
-
-'high-voltage power line',
-'high voltage power line',
-
-'transmission line',
-
-'transmission network',
-
-'grid sabotage',
-
-'explosive device',
-'explosive devices',
-
-'power sabotage',
-
-'electrical infrastructure'
+    'european union',
+    'eu',
+    'frontex',
+    'saceur',
+    'shape',
+    'power grid',
+    'electricity grid',
+    'energy grid',
+    'power infrastructure',
+    'substation',
+    'transformer station',
+    'transformer substation',
+    'power station',
+    'high-voltage line',
+    'high voltage line',
+    'high-voltage power line',
+    'high voltage power line',
+    'transmission line',
+    'transmission network',
+    'grid sabotage',
+    'explosive device',
+    'explosive devices',
+    'power sabotage',
+    'electrical infrastructure'
 ];
-const searchKeywords =
-securityKeywords.map(
-keyword => keyword.toLowerCase()
-);
-const locationMap = {
 
+const searchKeywords = securityKeywords.map(keyword => keyword.toLowerCase());
+
+const locationMap = {
     gotland: [57.65, 18.30],
     bornholm: [55.25, 14.90],
     kaliningrad: [54.71, 20.50],
-
     tallinn: [59.44, 24.75],
     helsinki: [60.17, 24.94],
     helsingfors: [60.17, 24.94],
-
     klaipeda: [55.71, 21.13],
     gdynia: [54.53, 18.55],
     karlskrona: [56.16, 15.59],
-
     stockholm: [59.33, 18.07],
-
     åland: [60.15, 20.00],
     aland: [60.15, 20.00],
-
-    baltic sea: [58.50, 18.50],
+    'baltic sea': [58.50, 18.50],
     östersjön: [58.50, 18.50],
-
-    gulf of finland: [59.50, 25.50],
-
+    'gulf of finland': [59.50, 25.50],
     estlink: [59.40, 24.90],
-    estlink 1: [59.40, 24.90],
-    estlink 2: [59.40, 24.90],
-
+    'estlink 1': [59.40, 24.90],
+    'estlink 2': [59.40, 24.90],
     nordbalt: [55.60, 20.40],
-
     swepol: [55.30, 15.90]
 };
+
 function findLocation(articleText) {
-
     for (const place in locationMap) {
-
         if (articleText.includes(place)) {
-
             return {
                 name: place,
                 coords: locationMap[place]
             };
-
         }
-
     }
-
     return null;
 }
-function addIncidentToMap(
-    item,
-    priority,
-    location
-) {
 
-    const color =
-        priority === 'critical'
-        ? '#ff0000'
-        : '#ff9900';
+function addIncidentToMap(item, priority, location) {
+    const color = priority === 'critical' ? '#ff0000' : '#ff9900';
 
     L.circleMarker(
         location.coords,
         {
-            radius:
-                priority === 'critical'
-                ? 10
-                : 7,
-
+            radius: priority === 'critical' ? 10 : 7,
             color: color,
             fillColor: color,
             fillOpacity: 0.8,
@@ -743,7 +444,6 @@ function addIncidentToMap(
         <b>${item.title}</b><br>
         ${location.name}
     `);
-
 }
 
 // ======================================
@@ -751,29 +451,15 @@ function addIncidentToMap(
 // ======================================
 
 function updateClock() {
-
-const now = new Date();
-
-const clock =
-document.getElementById(
-'live-clock'
-);
-
-if (clock) {
-
-clock.textContent =
-now.toLocaleTimeString('sv-SE');
-
-}
-
+    const now = new Date();
+    const clock = document.getElementById('live-clock');
+    if (clock) {
+        clock.textContent = now.toLocaleTimeString('sv-SE');
+    }
 }
 
 updateClock();
-
-setInterval(
-updateClock,
-1000
-);
+setInterval(updateClock, 1000);
 
 // ======================================
 // NÄSTA RSS-SÖKNING
@@ -782,55 +468,33 @@ updateClock,
 let nextRefresh = 120;
 
 function updateRefreshCounter() {
+    const element = document.getElementById('next-update');
+    if (!element) return;
 
-const element =
-document.getElementById(
-'next-update'
-);
+    element.textContent = 'Nästa sökning om: ' + nextRefresh + ' sek';
+    nextRefresh--;
 
-if (!element) return;
-
-element.textContent =
-'Nästa sökning om: ' +
-nextRefresh +
-' sek';
-
-nextRefresh--;
-
-if (nextRefresh < 0) {
-
-nextRefresh = 120;
-
-}
-
+    if (nextRefresh < 0) {
+        nextRefresh = 120;
+    }
 }
 
 updateRefreshCounter();
-
-setInterval(
-updateRefreshCounter,
-1000
-);
+setInterval(updateRefreshCounter, 1000);
 
 // ======================================
 // FLIKAR
 // ======================================
 
 function showTab(tabName) {
+    document.querySelectorAll('.feed-container').forEach(feed => {
+        feed.classList.add('hidden');
+    });
 
-document
-.querySelectorAll('.feed-container')
-.forEach(feed => {
-
-feed.classList.add('hidden');
-
-});
-
-const targetFeed = document.getElementById(tabName + '-feed');
-if (targetFeed) {
-    targetFeed.classList.remove('hidden');
-}
-
+    const targetFeed = document.getElementById(tabName + '-feed');
+    if (targetFeed) {
+        targetFeed.classList.remove('hidden');
+    }
 }
 
 // ======================================
@@ -838,446 +502,180 @@ if (targetFeed) {
 // ======================================
 
 const seenArticles = new Set();
-
 let firstLoad = true;
 
 async function fetchFeeds() {
+    for (const feed of feeds) {
+        try {
+            const response = await fetch(proxyUrl + encodeURIComponent(feed));
+            if (!response.ok) continue;
 
-for (const feed of feeds) {
+            const data = await response.json();
+            if (!data.items) continue;
 
-try {
+            data.items.forEach(item => {
+                const content = (item.title + ' ' + (item.description || '')).toLowerCase();
+                const relevant = searchKeywords.some(keyword => content.includes(keyword));
 
-const response =
-await fetch(
-proxyUrl +
-encodeURIComponent(feed)
-);
+                if (relevant && !seenArticles.has(item.link)) {
+                    seenArticles.add(item.link);
+                    renderArticle(item, !firstLoad);
+                }
+            });
+        } catch(error) {
+            console.error('Fel i RSS-flöde:', feed, error);
+        }
+    }
 
-if (!response.ok)
-continue;
+    const updateDiv = document.getElementById('last-update');
+    if (updateDiv) {
+        updateDiv.textContent = 'Senaste RSS: ' + new Date().toLocaleTimeString('sv-SE');
+    }
 
-const data =
-await response.json();
-
-if (!data.items)
-continue;
-
-data.items.forEach(item => {
-
-const content =
-(
-item.title +
-' ' +
-(item.description || '')
-)
-.toLowerCase();
-
-const relevant =
-searchKeywords.some(
-keyword =>
-content.includes(keyword)
-);
-
-
-if (
-relevant &&
-!seenArticles.has(item.link)
-) {
-
-seenArticles.add(item.link);
-
-renderArticle(
-item,
-!firstLoad
-);
-
-}
-
-});
-
-}
-
-catch(error) {
-
-console.error(
-'Fel i RSS-flöde:',
-feed,
-error
-);
-
-}
-}
-
-const updateDiv =
-document.getElementById(
-'last-update'
-);
-
-if (updateDiv) {
-
-updateDiv.textContent =
-'Senaste RSS: ' +
-new Date().toLocaleTimeString(
-'sv-SE'
-);
-
-}
-
-firstLoad = false;
-
+    firstLoad = false;
 }
 
 // ======================================
 // ARTIKLAR
 // ======================================
 
-function renderArticle(
-item,
-isNew
-) {
+function renderArticle(item, isNew) {
+    const articleDate = new Date(item.pubDate);
+    const now = new Date();
+    const diffDays = Math.floor((now - articleDate) / 86400000);
 
-const articleDate =
-new Date(item.pubDate);
+    if (diffDays > 5) {
+        return;
+    }
 
-const now =
-new Date();
+    let container;
+    if (diffDays < 1) {
+        container = document.getElementById('today-feed');
+    } else if (diffDays < 2) {
+        container = document.getElementById('yesterday-feed');
+    } else {
+        container = document.getElementById('older-feed');
+    }
 
-const diffDays =
-Math.floor(
-(now - articleDate) /
-86400000
-);
+    if (!container) return;
 
-if (diffDays > 5) {
-return;
-}
+    const div = document.createElement('div');
+    div.className = 'news-item';
 
-let container;
+    const articleText = (item.title + ' ' + (item.description || '')).toLowerCase();
+    const location = findLocation(articleText);
+    const isCritical = criticalKeywords.some(keyword => articleText.includes(keyword));
+    const isWarning = warningKeywords.some(keyword => articleText.includes(keyword));
 
-if (diffDays < 1) {
-
-container =
-document.getElementById(
-'today-feed'
-);
-
-}
-
-else if (diffDays < 2) {
-
-container =
-document.getElementById(
-'yesterday-feed'
-);
-
-}
-
-else {
-
-container =
-document.getElementById(
-'older-feed'
-);
-
-}
-
-if (!container) return;
-
-const div =
-document.createElement(
-'div'
-);
-
-div.className =
-'news-item';
-
-const articleText =
-(
-item.title +
-' ' +
-(item.description || '')
-)
-.toLowerCase();
-
-    const location =
-    findLocation(
-        articleText
-    );
-
-const isCritical =
-criticalKeywords.some(
-keyword =>
-articleText.includes(keyword)
-);
-
-const isWarning =
-warningKeywords.some(
-keyword =>
-articleText.includes(keyword)
-);
-if (location) {
+    if (location) {
+        if (isCritical) {
+            addIncidentToMap(item, 'critical', location);
+        } else if (isWarning) {
+            addIncidentToMap(item, 'warning', location);
+        }
+    }
 
     if (isCritical) {
-
-        addIncidentToMap(
-            item,
-            'critical',
-            location
-        );
-
+        div.classList.add('priority-critical');
+    } else if (isWarning) {
+        div.classList.add('priority-warning');
     }
 
-    else if (isWarning) {
-
-        addIncidentToMap(
-            item,
-            'warning',
-            location
-        );
-
+    if (isNew) {
+        div.classList.add('new-flash');
     }
 
-}
+    const articleLink = document.createElement('a');
+    articleLink.href = item.link;
+    articleLink.target = '_blank';
+    articleLink.rel = 'noopener noreferrer';
+    articleLink.textContent = item.title;
 
-if (isCritical) {
+    const sourceDiv = document.createElement('div');
+    sourceDiv.className = 'source';
 
-    div.classList.add(
-    'priority-critical'
-    );
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
 
-}
-else if (isWarning) {
-
-    div.classList.add(
-    'priority-warning'
-    );
-
-}
-
-if (isNew) {
-
-    div.classList.add(
-    'new-flash'
-    );
-
-}
-
-
-const articleLink =
-document.createElement(
-'a'
-);
-
-articleLink.href =
-item.link;
-
-articleLink.target =
-'_blank';
-
-articleLink.rel =
-'noopener noreferrer';
-
-articleLink.textContent =
-item.title;
-
-const sourceDiv =
-document.createElement(
-'div'
-);
-
-sourceDiv.className =
-'source';
-
-const today =
-new Date();
-
-const yesterday =
-new Date();
-
-yesterday.setDate(
-today.getDate() - 1
-);
-
-if (
-articleDate.toDateString() ===
-today.toDateString()
-) {
-
-    sourceDiv.textContent =
-    'Idag ' +
-    articleDate.toLocaleTimeString(
-    'sv-SE',
-    {
-        hour: '2-digit',
-        minute: '2-digit'
+    if (articleDate.toDateString() === today.toDateString()) {
+        sourceDiv.textContent = 'Idag ' + articleDate.toLocaleTimeString('sv-SE', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    } else if (articleDate.toDateString() === yesterday.toDateString()) {
+        sourceDiv.textContent = 'Igår ' + articleDate.toLocaleTimeString('sv-SE', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    } else {
+        sourceDiv.textContent = articleDate.toLocaleString('sv-SE', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
     }
-    );
 
-}
-else if (
-articleDate.toDateString() ===
-yesterday.toDateString()
-) {
+    div.appendChild(articleLink);
+    div.appendChild(sourceDiv);
+    container.prepend(div);
 
-    sourceDiv.textContent =
-    'Igår ' +
-    articleDate.toLocaleTimeString(
-    'sv-SE',
-    {
-        hour: '2-digit',
-        minute: '2-digit'
+    while (container.children.length > 75) {
+        container.removeChild(container.lastChild);
     }
-    );
-
-}
-else {
-
-    sourceDiv.textContent =
-    articleDate.toLocaleString(
-    'sv-SE',
-    {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
-    }
-    );
-
 }
 
-div.appendChild(articleLink);
-div.appendChild(sourceDiv);
-
-container.prepend(div);
-
-while (
-container.children.length > 75
-) {
-
-    container.removeChild(
-    container.lastChild
-    );
-
-}
-}
-    
 function showVMA(item) {
-
-    const banner =
-        document.getElementById(
-            'vma-banner'
-        );
-
-    const text =
-        document.getElementById(
-            'vma-text'
-        );
-
+    const banner = document.getElementById('vma-banner');
+    const text = document.getElementById('vma-text');
     if (!banner || !text) return;
 
-    text.textContent =
-        item.title;
-
-    banner.classList.remove(
-        'hidden'
-    );
-
-    banner.classList.add(
-        'active'
-    );
-
+    text.textContent = item.title;
+    banner.classList.remove('hidden');
+    banner.classList.add('active');
 }
 
 function clearVMA() {
-
-    const banner =
-        document.getElementById(
-            'vma-banner'
-        );
-
+    const banner = document.getElementById('vma-banner');
     if (!banner) return;
 
-    banner.classList.remove(
-        'active'
-    );
-
-    banner.classList.add(
-        'hidden'
-    );
-
+    banner.classList.remove('active');
+    banner.classList.add('hidden');
 }
 
-
 async function fetchVMA() {
-
     try {
-
-        const response =
-            await fetch(
-                proxyUrl +
-                encodeURIComponent(vmaFeed)
-            );
-
+        const response = await fetch(proxyUrl + encodeURIComponent(vmaFeed));
         if (!response.ok) {
-
             clearVMA();
             return;
-
         }
 
-        const data =
-            await response.json();
-
+        const data = await response.json();
         if (!data.items) {
-
             clearVMA();
             return;
-
         }
 
-        const vmaItem =
-            data.items.find(item => {
-
-                const text =
-                    (
-                        item.title +
-                        ' ' +
-                        (item.description || '')
-                    ).toLowerCase();
-
-                return (
-                    text.includes('vma') ||
-                    text.includes(
-                        'viktigt meddelande till allmänheten'
-                    )
-                );
-
-            });
+        const vmaItem = data.items.find(item => {
+            const text = (item.title + ' ' + (item.description || '')).toLowerCase();
+            return (
+                text.includes('vma') ||
+                text.includes('viktigt meddelande till allmänheten')
+            );
+        });
 
         if (vmaItem) {
-
-            showVMA(vmaItem);
-
+            showVMA(vvmaItem = vmaItem);
         } else {
-
             clearVMA();
-
         }
-
-    }
-
-    catch(error) {
-
-        console.error(
-            'VMA-fel:',
-            error
-        );
-
+    } catch(error) {
+        console.error('VMA-fel:', error);
         clearVMA();
-
     }
-
 }
 
 // ======================================
@@ -1287,10 +685,7 @@ fetchFeeds();
 fetchVMA();
 
 setInterval(() => {
-
     fetchFeeds();
     fetchVMA();
-
     nextRefresh = 120;
-
 }, 120000);
