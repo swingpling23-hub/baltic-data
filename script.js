@@ -433,7 +433,23 @@ const locationMap = {
     'estlink 1': [59.40, 24.90],
     'estlink 2': [59.40, 24.90],
     nordbalt: [55.60, 20.40],
-    swepol: [55.30, 15.90]
+    swepol: [55.30, 15.90],
+    estonia: [58.7, 25.0],
+latvia: [56.9, 24.6],
+lithuania: [55.2, 23.8],
+belarus: [53.9, 27.6],
+
+narva: [59.38, 28.20],
+tartu: [58.37, 26.73],
+
+daugavpils: [55.87, 26.53],
+rezekne: [56.51, 27.34],
+
+visaginas: [55.60, 26.43],
+vilnius: [54.68, 25.28],
+
+suwalki: [54.10, 22.93],
+
 };
 
 function findLocation(articleText) {
@@ -449,24 +465,34 @@ function findLocation(articleText) {
 }
 
 function addIncidentToMap(item, priority, location) {
-    const color = priority === 'critical' ? '#ff0000' : '#ff9900';
 
-    L.circleMarker(
-        location.coords,
-        {
-            radius: priority === 'critical' ? 10 : 7,
-            color: color,
-            fillColor: color,
-            fillOpacity: 0.8,
-            weight: 2
-        }
-    )
+    let color = '#ff9900';
+    let radius = 7;
+
+    if (priority === 'critical') {
+        color = '#ff0000';
+        radius = 10;
+    }
+
+    if (priority === 'border-alert') {
+        color = '#00bfff';
+        radius = 9;
+    }
+
+    L.circleMarker(location.coords, {
+        radius,
+        color,
+        fillColor: color,
+        fillOpacity: 0.8,
+        weight: 2
+    })
     .addTo(incidentLayer)
     .bindPopup(`
         <b>${item.title}</b><br>
         ${location.name}
     `);
 }
+
 
 // ======================================
 // LIVE-KLOCKA
