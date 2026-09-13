@@ -725,7 +725,7 @@ async function fetchVMA() {
         });
 
         if (vmaItem) {
-            showVMA(vvmaItem = vmaItem);
+            showVMA(vmaItem);
         } else {
             clearVMA();
         }
