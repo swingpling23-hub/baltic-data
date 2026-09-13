@@ -154,7 +154,7 @@ const borderAlertKeywords = [
     'suspected soldiers',
     'saboteurs',
     'infiltration',
-    'cross-border incident'
+    'cross-border incident',
     'airspace intrusion',
 'airspace incursion',
 'russian aircraft',
@@ -166,9 +166,9 @@ const borderAlertKeywords = [
 'drone violation',
 'border guards',
 'nato fighters',
-'scramble mission'
-'shaheed´,
-'fpv drone´
+'scramble mission',
+'shahed´,
+'fpv drone'
 ];
 
 // ======================================
