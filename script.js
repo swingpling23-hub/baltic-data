@@ -167,7 +167,7 @@ const borderAlertKeywords = [
 'border guards',
 'nato fighters',
 'scramble mission'
-'shaheed´
+'shaheed´,
 'fpv drone´
 ];
 
@@ -665,14 +665,20 @@ function renderArticle(item, isNew) {
 
 
     if (isCritical) {
-        div.classList.add('priority-critical');
-    } else if (isWarning) {
-        div.classList.add('priority-warning');
-    }
 
-    if (isNew) {
-        div.classList.add('new-flash');
-    }
+    div.classList.add('priority-critical');
+
+} else if (isBorderAlert) {
+
+    div.classList.add('priority-border');
+
+} else if (isWarning) {
+
+    div.classList.add('priority-warning');
+
+}
+
+    
 
     const articleLink = document.createElement('a');
     articleLink.href = item.link;
