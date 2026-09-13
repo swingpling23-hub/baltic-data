@@ -134,6 +134,28 @@ const warningKeywords = [
     'drone',
     'ais spoofing'
 ];
+const borderAlertKeywords = [
+    'airspace violation',
+    'airspace breach',
+    'entered airspace',
+    'border violation',
+    'crossed border',
+    'unidentified aircraft',
+    'unidentified drone',
+    'russian drone',
+    'belarusian drone',
+    'military drone',
+    'fighter scrambled',
+    'nato scramble',
+    'intercepted aircraft',
+    'air force response',
+    'foreign military personnel',
+    'armed individuals',
+    'suspected soldiers',
+    'saboteurs',
+    'infiltration',
+    'cross-border incident'
+];
 
 // ======================================
 // NYCKELORD
