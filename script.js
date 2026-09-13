@@ -466,7 +466,7 @@ vilnius: [54.68, 25.28],
 
 suwalki: [54.10, 22.93],
 pskov: [57.81, 28.33],
-saint petersburg: [59.93, 30.31],
+'saint petersburg': [59.93, 30.31],
 
 brest: [52.10, 23.70],
 grodno: [53.68, 23.83],
