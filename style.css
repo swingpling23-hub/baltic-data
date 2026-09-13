@@ -198,6 +198,29 @@ h2 {
     );
 
 }
+/* =========================
+   GRÄNSINCIDENT
+   ========================= */
+
+.priority-border {
+
+    border-left: 6px solid #00bfff;
+
+    background: rgba(
+        0,
+        191,
+        255,
+        0.15
+    );
+
+    box-shadow: 0 0 8px rgba(
+        0,
+        191,
+        255,
+        0.4
+    );
+
+}
 
 /* =========================
    KRITISK PULS
