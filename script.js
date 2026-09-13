@@ -19,6 +19,8 @@ L.tileLayer(
 ).addTo(overviewMap);
 
 const incidentLayer = L.layerGroup().addTo(overviewMap);
+const incidents = [];
+const INCIDENT_LIFETIME = 24 * 60 * 60 * 1000; // 24 timmar
 
 [
     [57.65, 18.30, 'Gotland'],
@@ -503,7 +505,8 @@ function addIncidentToMap(item, priority, location) {
         radius = 9;
     }
 
-    L.circleMarker(location.coords, {
+    const marker = L.circleMarker(location.coords, {
+
         radius,
         color,
         fillColor: color,
@@ -515,6 +518,11 @@ function addIncidentToMap(item, priority, location) {
         <b>${item.title}</b><br>
         ${location.name}
     `);
+    incidents.push({
+    marker,
+    timestamp: Date.now()
+});
+
 }
 
 
@@ -774,6 +782,22 @@ async function fetchVMA() {
         clearVMA();
     }
 }
+function removeExpiredIncidents() {
+
+    const now = Date.now();
+
+    for (let i = incidents.length - 1; i >= 0; i--) {
+
+        if (now - incidents[i].timestamp > INCIDENT_LIFETIME) {
+
+            incidentLayer.removeLayer(
+                incidents[i].marker
+            );
+
+            incidents.splice(i, 1);
+        }
+    }
+}
 
 // ======================================
 // START
@@ -782,7 +806,12 @@ fetchFeeds();
 fetchVMA();
 
 setInterval(() => {
+
+    removeExpiredIncidents();
+
     fetchFeeds();
     fetchVMA();
+
     nextRefresh = 120;
+
 }, 120000);
