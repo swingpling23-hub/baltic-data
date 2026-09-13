@@ -588,14 +588,23 @@ function renderArticle(item, isNew) {
     const location = findLocation(articleText);
     const isCritical = criticalKeywords.some(keyword => articleText.includes(keyword));
     const isWarning = warningKeywords.some(keyword => articleText.includes(keyword));
+    const isBorderAlert = borderAlertKeywords.some(keyword =>
+    articleText.includes(keyword));
 
     if (location) {
-        if (isCritical) {
-            addIncidentToMap(item, 'critical', location);
-        } else if (isWarning) {
-            addIncidentToMap(item, 'warning', location);
-        }
+
+    if (isCritical) {
+        addIncidentToMap(item, 'critical', location);
+
+    } else if (isBorderAlert) {
+        addIncidentToMap(item, 'border-alert', location);
+
+    } else if (isWarning) {
+        addIncidentToMap(item, 'warning', location);
     }
+
+}
+
 
     if (isCritical) {
         div.classList.add('priority-critical');
