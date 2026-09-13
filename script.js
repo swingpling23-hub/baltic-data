@@ -155,6 +155,20 @@ const borderAlertKeywords = [
     'saboteurs',
     'infiltration',
     'cross-border incident'
+    'airspace intrusion',
+'airspace incursion',
+'russian aircraft',
+'belarusian aircraft',
+'military aircraft',
+'fighter jets scrambled',
+'air policing',
+'drone incursion',
+'drone violation',
+'border guards',
+'nato fighters',
+'scramble mission'
+'shaheed´
+'fpv drone´
 ];
 
 // ======================================
@@ -449,6 +463,14 @@ visaginas: [55.60, 26.43],
 vilnius: [54.68, 25.28],
 
 suwalki: [54.10, 22.93],
+pskov: [57.81, 28.33],
+saint petersburg: [59.93, 30.31],
+
+brest: [52.10, 23.70],
+grodno: [53.68, 23.83],
+
+riga: [56.95, 24.10],
+kaunas: [54.90, 23.90]
 
 };
 
@@ -562,7 +584,12 @@ async function fetchFeeds() {
             if (!data.items) continue;
 
             data.items.forEach(item => {
-                const content = (item.title + ' ' + (item.description || '')).toLowerCase();
+                const content = (
+    item.title + ' ' +
+    (item.description || '') + ' ' +
+    (item.content || '')
+).toLowerCase();
+
                 const relevant = searchKeywords.some(keyword => content.includes(keyword));
 
                 if (relevant && !seenArticles.has(item.link)) {
@@ -610,7 +637,12 @@ function renderArticle(item, isNew) {
     const div = document.createElement('div');
     div.className = 'news-item';
 
-    const articleText = (item.title + ' ' + (item.description || '')).toLowerCase();
+    const articleText = (
+    item.title + ' ' +
+    (item.description || '') + ' ' +
+    (item.content || '')
+).toLowerCase();
+
     const location = findLocation(articleText);
     const isCritical = criticalKeywords.some(keyword => articleText.includes(keyword));
     const isWarning = warningKeywords.some(keyword => articleText.includes(keyword));
